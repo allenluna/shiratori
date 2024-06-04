@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block title %} Register {% endblock %}
+
+{% block body %}
+<div class="container register">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+        in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{ message }}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+    {% endfor %} {% endif %} {% endwith %}
+    <form class="row g-3" method="post">
+        <h2 class="text-center">Register</h2>
+        <div class="col-md-12">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" id="name">
+        </div>
+        <div class="col-md-12">
+            <label for="inputEmail4" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-12">
+            <label for="inputPassword4" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="inputPassword4">
+        </div>
+        <div class="col-4">
+            <label for="inputState" class="form-label">Status</label>
+            <select id="inputState" class="form-select" name="status">
+              <option selected value="">Choose...</option>
+              <option value="admin">Admin</option>
+              <option value="student">Student</option>
+            </select>
+        </div>
+        <div class="col-12 mr-auto">
+            <button type="submit" class="btn btn-dark w-100">Sign Up</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

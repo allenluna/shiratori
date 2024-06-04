@@ -1,0 +1,38 @@
+.options{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-data{
+    padding: 3%;
+}
+
+.card-body-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.player{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    padding: 3% 0;
+    border: 1px solid #929090;
+    border-radius: 10px;
+}
+
+.player a{
+    text-decoration: none;
+    font-size: 15px;
+    color: #000;
+}
+
+/* for player disabled when bot turns */
+.disabled {
+    pointer-events: none;
+    background-color: #e9ecef;
+}

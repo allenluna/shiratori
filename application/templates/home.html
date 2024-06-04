@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %} Home {% endblock %}
+
+{% block body%}
+
+<section class="options">
+    <div class="card card-data">
+        <div class="card-header">
+            <h1>SHIRATORI GAME</h1>
+        </div>
+        <div class="card-body text-center card-body-day">
+            <div class="player mb-3">
+                <a href="#">Instruction</a>              
+            </div>
+            <div class="player mb-3">
+                <a href="#">Tutorial</a>              
+            </div>
+            <div class="player mb-3">
+                <a href="{{ url_for('view.single_player') }}">Single Player</a>              
+            </div>
+            <div class="player mb-3">
+                <a href="#">Multi Player</a>              
+            </div>
+            <div class="player mb-3">
+                <a href="{{ url_for('view.add_words') }}">Manage</a>              
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
