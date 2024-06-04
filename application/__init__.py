@@ -11,7 +11,7 @@ def create_app():
     app.config["SECRET_KEY"] = "asdasdsa sadsadsadas"
     load_dotenv()
     # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://postgres:qwerty@localhost:5432/agkas"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"{os.environ.get("DATABASE_URL")}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
     
     
