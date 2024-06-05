@@ -2,6 +2,7 @@ let playerScore = 0;
 let botScore = 0;
 let timer;
 let turn = 'player'; // 'player' or 'bot'
+let usedWords = []; // Array to keep track of used words
 
 // Start timer function
 const startTimer = () => {
@@ -77,6 +78,7 @@ const updateScore = (player) => {
 const resetGame = () => {
     playerScore = 0;
     botScore = 0;
+    usedWords = []; // Reset used words list
     document.querySelector("#player-score").textContent = `Player Score: ${playerScore}`;
     document.querySelector("#bot-score").textContent = `Bot Score: ${botScore}`;
     resetInputForms();
@@ -120,14 +122,22 @@ const playerInputHandler = (e) => {
             playerResultDiv.appendChild(cardDiv);
 
             cardDiv.querySelector("button").addEventListener("click", () => {
-                document.querySelector("#player-word").value = player.word;
+                const word = player.word;
+
+                if (usedWords.includes(word)) {
+                    alert("Word already used!");
+                    return;
+                }
+
+                usedWords.push(word);
+                document.querySelector("#player-word").value = word;
                 playerResultDiv.innerHTML = "";
 
                 wordIcon.innerHTML = `<i class="bi bi-book" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>`;
                 modalResult.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">${player.word}</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">${word}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -167,17 +177,27 @@ const botPlayer = (data) => {
         }
 
         res.data.forEach(bot => {
+            const word = bot.word;
+
+            if (usedWords.includes(word)) {
+                alert("Word already used!");
+                switchTurn('player');
+                return;
+            }
+
+            usedWords.push(word);
+            botWord.value = word;
+
             const cardDiv = document.createElement("div");
             cardDiv.className = "card mb-2";
-            botWord.value = bot.word;
 
             cardDiv.innerHTML = `
-                <div class="card-body border-0 outline-0" data-word="${bot.word}">
-                    <h5 class="card-title">${bot.word}</h5>
+                <div class="card-body border-0 outline-0" data-word="${word}">
+                    <h5 class="card-title">${word}</h5>
                     <h6>Meaning:</h6>
                     <p class="card-title">${bot.meaning}</p>
                     <h6>Example:</h6>
-                    <p class="card-title">Ang <span class="fw-bold">${bot.word}</span> ay <span class="fw-bold">${bot.meaning}</span> sa tagalog</p>
+                    <p class="card-title">Ang <span class="fw-bold">${word}</span> ay <span class="fw-bold">${bot.meaning}</span> sa tagalog</p>
                 </div>
             `;
             botResult.appendChild(cardDiv);
@@ -188,7 +208,11 @@ const botPlayer = (data) => {
     });
 };
 
-document.querySelector("#player-word").addEventListener("input", playerInputHandler);
+// Reset game on reset button click
+document.querySelector("#reset").addEventListener("click", () => {
+    window.location.reload();
+});
 
+document.querySelector("#player-word").addEventListener("input", playerInputHandler);
 
 resetGame();

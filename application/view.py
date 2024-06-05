@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user
-import os
-from dotenv import load_dotenv
+
+from .models import Player, Bot
 
 view = Blueprint("view", __name__)
 
@@ -10,8 +10,6 @@ view = Blueprint("view", __name__)
 def home():
     if not current_user.is_authenticated:
         return redirect(url_for("auth.login"))
-    load_dotenv()
-    print(os.environ.get("DATABASE_URL"))
     return render_template("home.html", current_user=current_user)
 
 @view.route("/single-player")
@@ -27,3 +25,12 @@ def add_words():
         return redirect(url_for("view.home"))
     
     return render_template("addWords.html", current_user=current_user)
+
+@view.route("/data-tables", methods=["GET", "POST"])
+def data_tables():
+    
+    players = Player.query.all()
+    bots = Bot.query.all()
+
+    
+    return render_template("dataTables.html", players=players, bots=bots ,current_user=current_user)

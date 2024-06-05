@@ -9,9 +9,9 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "asdasdsa sadsadsadas"
-    load_dotenv()
-    # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://postgres:qwerty@localhost:5432/agkas"
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    # load_dotenv()
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://postgres:qwerty@localhost:5432/agkas"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
     
     

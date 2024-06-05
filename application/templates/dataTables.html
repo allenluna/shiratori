@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %} Tables {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Player Words Table -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Player Words
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Word</th>
+                                <th>Meaning</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="playerRowData">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Bot Words Table -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Bot Words
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Word</th>
+                                <th>Meaning</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="botRowData">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Section -->
+<div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="wordModalLabel">Add New Word</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="wordInput" class="form-label">Word</label>
+                    <input type="text" class="form-control" id="wordInput" name="word" required>
+                </div>
+                <div class="mb-3">
+                    <label for="meaningInput" class="form-label">Meaning</label>
+                    <input type="text" class="form-control" id="meaningInput" name="meaning" required>
+                </div>
+                <div class="mb-3">
+                    <label for="descriptionInput" class="form-label">Description</label>
+                    <textarea class="form-control" id="descriptionInput" name="description" rows="3" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer" id="modalFooter">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/dataTables.js') }}"></script>
+{% endblock %}

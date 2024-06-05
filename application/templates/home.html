@@ -5,24 +5,26 @@
 <section class="options">
     <div class="card card-data">
         <div class="card-header">
-            <h1>SHIRATORI GAME</h1>
+            <h1 class="text-center">AGKAS</h1>
         </div>
         <div class="card-body text-center card-body-day">
             <div class="player mb-3">
-                <a href="#">Instruction</a>              
+                <a href="#" onclick="alert('Ongoing Development')">Instruction</a>              
             </div>
             <div class="player mb-3">
-                <a href="#">Tutorial</a>              
+                <a href="#" onclick="alert('Ongoing Development')">Tutorial</a>              
             </div>
             <div class="player mb-3">
                 <a href="{{ url_for('view.single_player') }}">Single Player</a>              
             </div>
             <div class="player mb-3">
-                <a href="#">Multi Player</a>              
+                <a href="#" onclick="alert('Ongoing Development')">Multi Player</a>              
             </div>
+            {% if current_user.is_admin == "admin" %}
             <div class="player mb-3">
                 <a href="{{ url_for('view.add_words') }}">Manage</a>              
             </div>
+            {% endif %}
         </div>
     </div>
 </section>
