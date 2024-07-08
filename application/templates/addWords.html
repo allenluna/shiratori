@@ -2,61 +2,26 @@
 
 {% block body %}
 <section class="manage d-flex justify-content-center align-items-center" style="height: 90vh;">
-    <div class="container" style="max-height: 90vh; overflow-y: auto;">
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="row g-3">
-                            <h2 class="text-center">Add Word For Player</h2>
-                            <div class="col-md-12">
-                                <label for="player-word" class="form-label">Word</label>
-                                <input type="text" name="player_word" class="form-control" id="player-word" required placeholder="Word">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="player-meaning" class="form-label">Meaning</label>
-                                <input type="text" name="player_meaning" class="form-control" id="player-meaning" required placeholder="Meaning of Word">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="player-description" class="form-label">Description</label>
-                                <textarea name="player_description" class="form-control" id="player-description" rows="3" required placeholder="Description"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark w-100" id="playerBtn">Add Word</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="row g-3" method="post">
-                            <h2 class="text-center">Add Word For Bot</h2>
-                            <div class="col-md-12">
-                                <label for="bot-word" class="form-label">Word</label>
-                                <input type="text" name="bot_word" class="form-control" id="bot-word" required placeholder="Word">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="bot-title" class="form-label">Meaning</label>
-                                <input type="text" name="bot_title" class="form-control" id="bot-meaning" required placeholder="Meaning of Word">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="bot-description" class="form-label">Description</label>
-                                <textarea name="bot_description" class="form-control" id="bot-description" rows="3" required placeholder="Description"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark w-100" id="botBtn">Add Word</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
+    <main class="card-manage">
+        <div class="back" id="back-to">
+            <i class="bi bi-chevron-left"></i>Back
         </div>
-    </div>
+        <div class="manage-logo">
+            <img src="{{ url_for('static', filename='assets/img1.png') }}" alt="">
+            <img src="{{ url_for('static', filename='assets/img3.png') }}" alt="">
+            <img src="{{ url_for('static', filename='assets/img2.png') }}" alt="">
+        </div>
+        <h1>AGKAS</h1>
+        <p>Kapampangan Words</p>
+        <div class="add-words">
+            <a href="{{ url_for('view.player_dictionary') }}" class="btn btn-dark mb-2 w-75">Player Dictionary</a>
+            <a href="{{ url_for('view.bot_dictionary') }}" class="btn btn-dark mb-2 w-75">Bot Dictionary</a>
+        </div>
+    </main>
 </section>
 {% endblock %}
 
 {% block script %} 
-<script src="{{ url_for('static', filename='js/addWords.js') }}"></script>
+<script src="{{ url_for('static', filename='js/back.js') }}"></script>
 {% endblock %}

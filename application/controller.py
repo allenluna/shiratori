@@ -38,8 +38,9 @@ def add_player():
         db.session.add(player)
         db.session.commit()
         
+        
 
-        return jsonify({"data": "Added."}), 201
+        return jsonify({"data": datas(player)}), 201
 
     return jsonify({"data": "Use POST to add player."}), 200
 
@@ -68,7 +69,7 @@ def add_bot():
         db.session.commit()
         
 
-        return jsonify({"data": "Added."}), 201
+        return jsonify({"data": datas(bot)}), 201
 
     return jsonify({"data": "Use POST to add player."}), 200
 
@@ -107,7 +108,6 @@ def player_table():
 def player_edit():
     id = int(request.json["id"])
     player = Player.query.get(id)
-    
     return {"data": datas(player)}
 
 @controller.route("/player-edit-result", methods=["GET", "POST"])
@@ -127,8 +127,8 @@ def player_edit_result():
     
     return {"data": datas(player)}
 
-
-################### delete data
+ 
+################### delete data ###############################
 
 @controller.route("/delete-player-data", methods=["POST"])
 def delete_player():
@@ -173,7 +173,7 @@ def bot_edit_result():
     return {"data": datas(player)}
 
 
-################### delete data
+################### delete data ####################################
 
 @controller.route("/delete-bot-data", methods=["POST"])
 def delete_bot():
@@ -185,3 +185,12 @@ def delete_bot():
         return jsonify({"success": True}), 200
     else:
         return jsonify({"success": False, "error": "Player not found"}), 404
+    
+    
+    
+##################################### player dictionary data ###################################
+@controller.route("/player-dic", methods=["GET", "POST"])
+def player_dic():
+    player_dic_data = Player.query.all()
+    
+    return {"data": [datas(data) for data in player_dic_data]}

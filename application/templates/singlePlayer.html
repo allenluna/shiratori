@@ -2,50 +2,58 @@
 {% block title %} Single Player {% endblock %}
 
 {% block body %}
-<section class="manage" style="height: 90vh;">
-    <div class="container" style="max-height: 90vh; overflow-y: auto;">
-        <h2 class="text-center py-3">Single Player</h2>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p id="timer">Time left: 30s</p>
-                <p id="player-score">Player Score: 0</p>
-                <p id="bot-score">Bot Score: 0</p>
-                <button id="reset" class="mb-3 p-2 px-4 btn btn-danger">Reset</button>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-md-12 text-center">
-                            <label for="player-word" class="form-label">Player</label>
-                            <div class="input-group">
-                                <input type="text" name="player_word" class="form-control" id="player-word" required placeholder="Word" autocomplete="off">
-                                <span class="input-group-text" id="word-icon"></span>
-                            </div>
-                        </div>
-                        <div class="py-2" id="player-result"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-md-12 text-center">
-                            <label for="bot-word" class="form-label">Bot</label>
-                            <input disabled type="text" name="bot_word" class="form-control" id="bot-word" required placeholder="Word">
-                        </div>
-                        <div id="bot-result" class="py-2"></div>
-                    </div>
-                </div>
+
+
+<section class="options">
+    <div class="back" id="back-to">
+        <i class="bi bi-chevron-left"></i>Back
+    </div>
+    <div class="card card-data">
+        <div class="card-header">
+            <h1 class="text-center">SINGLE PLAYER</h1>
+        </div>
+        <div class="card-body text-center card-body-day">
+            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#profile">
+                <div class="player mb-3">Easy</div>
+            </a>              
+            
+            
+            <a class="text-decoration-none text-white">
+                <div class="player mb-3">Medium</div>
+            </a>              
+            <a class="text-decoration-none text-white">
+                <div class="player mb-3">Hard</div>
+            </a>              
+            <div class="player mb-3">
+                <a href="#" >Extreme</a>              
             </div>
         </div>
     </div>
 </section>
 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" id="modal-result"></div>
+
+<!-- Post Modal -->
+<div class="modal fade modal-xl" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <main class="profile" id="player-profile">
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" alt="Duck"></a></div>
+            </main>
+        </div>
+      </div>
+    </div>
 </div>
+
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='js/singlePlayer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/back.js') }}"></script>
+<script src="{{ url_for('static', filename='js/difficulty/difficulty.js') }}"></script>
 {% endblock %}

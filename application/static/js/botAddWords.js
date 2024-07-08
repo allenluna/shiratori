@@ -16,7 +16,7 @@ const playerPostData = () => {
     const playerMeaning = document.querySelector("#player-meaning").value;
     const playerDesc = document.querySelector("#player-description").value;
 
-    postData(playerWord, playerMeaning, playerDesc, "/add-player");
+    postData(playerWord, playerMeaning, playerDesc, "/add-bot");
 }
 
 // const botPostData = () => {
@@ -27,7 +27,7 @@ const playerPostData = () => {
 //     postData(word, meaning, desc, "/add-bot");
 // }
 
-fetch("/player-dic").then(res => res.json()).then(res => {
+fetch("/bot-table").then(res => res.json()).then(res => {
     player_dic_data(res.data);
 });
 
@@ -113,7 +113,7 @@ const createFormData = (word, meaning, description) => {
 
 ///////////////////////// Edit Function //////////////////////// 
 const playerEdit = (id) => {
-    fetch(`/player-edit`, {
+    fetch(`/bot-edit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: id })
@@ -141,7 +141,7 @@ const playerEditResult = (id) => {
         description: descriptionInput.value
     });
 
-    fetch(`/player-edit-result`, {
+    fetch(`/bot-edit-result`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: data
@@ -174,7 +174,7 @@ const playerEditResult = (id) => {
 
 // Function to handle deleting of player data
 const playerDelete = (id) => {
-    fetch("/delete-player-data", {
+    fetch("/delete-bot-data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: id })

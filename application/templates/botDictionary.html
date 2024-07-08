@@ -1,0 +1,103 @@
+{% extends "base.html" %} {% block title %} Bot Dictionary {% endblock %}
+
+{% block body %}
+
+<section class="main-dictionary" style="height: 90vh;">
+    <div class="main-dic-title">
+        <h1>AGKAS</h1>
+        <p>Kapampangan Words</p>
+    </div>
+    <main class="player-card">
+        <div class="back" id="back-to">
+            <i class="bi bi-chevron-left"></i>Back
+        </div>
+
+        
+        <div class="add-words-table">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-word-data"><i class="bi bi-plus"></i> Add Word</button>
+            <table id="table-row-data">
+                <thead>
+                    <tr>
+                        <th>Words</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="row-data">
+                    
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+
+    <!-- Post Modal -->
+    <div class="modal fade" id="add-word-data" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Player Dictionary</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start">
+                <form>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label">Words:</label>
+                      <input type="text" class="form-control" id="player-word">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Meaning:</label>
+                        <input type="text" class="form-control" id="player-meaning">
+                      </div>
+                    <div class="mb-3">
+                      <label for="message-text" class="col-form-label">Example:</label>
+                      <textarea class="form-control" id="player-description"></textarea>
+                    </div>
+                  </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success" id="playerBtn">Add</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="edit-word-data" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" id="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Dictionary</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-start">
+              <form>
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Words:</label>
+                    <input type="text" class="form-control" id="edit-word">
+                  </div>
+                  <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label">Meaning:</label>
+                      <input type="text" class="form-control" id="edit-meaning">
+                    </div>
+                  <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Example:</label>
+                    <textarea class="form-control" id="edit-description"></textarea>
+                  </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" id="editBtn">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block script %} 
+<script src="{{ url_for('static', filename='js/botAddWords.js') }}"></script>
+{% endblock %}

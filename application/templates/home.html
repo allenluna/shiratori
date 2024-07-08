@@ -4,26 +4,35 @@
 
 <section class="options">
     <div class="card card-data">
+        <div class="logos">
+            <img src="{{ url_for('static', filename='assets/img1.png') }}" alt="">
+            <img src="{{ url_for('static', filename='assets/img3.png') }}" alt="">
+            <img src="{{ url_for('static', filename='assets/img2.png') }}" alt="">
+        </div>
         <div class="card-header">
             <h1 class="text-center">AGKAS</h1>
         </div>
         <div class="card-body text-center card-body-day">
-            <div class="player mb-3">
-                <a href="#" onclick="alert('Ongoing Development')">Instruction</a>              
+            <!-- <div class="player mb-3" onclick="alert('Ongoing Development')">
+                <a href="#" >Instruction</a>              
             </div>
-            <div class="player mb-3">
-                <a href="#" onclick="alert('Ongoing Development')">Tutorial</a>              
-            </div>
-            <div class="player mb-3">
-                <a href="{{ url_for('view.single_player') }}">Single Player</a>              
-            </div>
-            <div class="player mb-3">
-                <a href="#" onclick="alert('Ongoing Development')">Multi Player</a>              
+            <div class="player mb-3" onclick="alert('Ongoing Development')">
+                <a href="#" >Tutorial</a>              
+            </div> -->
+            
+            <a href="{{ url_for('view.single_player') }}" class="text-decoration-none text-white">
+                <div class="player mb-3">
+                    Single Player
+                </div>
+            </a>              
+            
+            <div class="player mb-3" onclick="alert('Ongoing Development')">
+                <a href="#" >Multi Player</a>              
             </div>
             {% if current_user.is_admin == "admin" %}
-            <div class="player mb-3">
-                <a href="{{ url_for('view.add_words') }}">Manage</a>              
-            </div>
+                <a href="{{ url_for('view.add_words') }}" class="text-decoration-none text-white">
+                    <div class="player mb-3">Manage</div>
+                </a>
             {% endif %}
         </div>
     </div>

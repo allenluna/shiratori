@@ -34,3 +34,26 @@ def data_tables():
 
     
     return render_template("dataTables.html", players=players, bots=bots ,current_user=current_user)
+
+
+@view.route("/player-dictionary", methods=["GET", "POST"])
+def player_dictionary():
+    
+    
+    return render_template("playerDictionary.html", current_user=current_user)
+
+
+@view.route("/bot-dictionary", methods=["GET", "POST"])
+def bot_dictionary():
+    
+    
+    return render_template("botDictionary.html", current_user=current_user)
+
+
+
+################################### options html ##########################################
+@view.route("/easy")
+def easy():
+    return render_template("difficulty/easy.html")
+
+
