@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} Fight {% endblock %}
+
+{% block body %}
+<section class="manage" style="height: 90vh; overflow-y: auto;">
+    <div class="container" style="max-height: 90vh; overflow-y: auto;">
+        <a class="history" type="button" data-bs-toggle="offcanvas" data-bs-target="#history" aria-controls="offcanvasScrolling"><i class="bi bi-book"></i></a>
+        
+        <!-- Quit Form -->
+        <form action="{{ url_for('multiplayer.quit_lobby', lobby_id=lobby_id) }}" method="POST" class="quitPlayer">
+            <button type="submit" class="btn btn-danger">QUIT</button>
+        </form>
+
+        <h2 class="text-center py-3">Multiplayer</h2>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p id="timer">Time left: 5s</p>
+                <p id="score"></p>
+                <button id="startGameBtn">Start Game</button>
+            </div>
+            <div id="playerFormsContainer" class="row">
+                <!-- Forms will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="users">
+    <div id="player1" data-player="{{player1_name}}"></div>
+    <div id="player2" data-player="{{player2_name}}"></div>
+    <div id="current_user" data-username="{{ user_turn }}"></div>
+    <div id="login_user" data-username="{{ login_user_current.name }}"></div>
+    <div id="plyr1" data-id="{{ plyr1 }}"></div>
+    <div id="plyr2" data-id="{{ plyr2}}"></div>
+</section>
+
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="history" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul id="history-list" class="list-group"></ul>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/fight.js') }}"></script>
+{% endblock %}

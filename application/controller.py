@@ -194,3 +194,8 @@ def player_dic():
     player_dic_data = Player.query.all()
     
     return {"data": [datas(data) for data in player_dic_data]}
+
+
+
+
+

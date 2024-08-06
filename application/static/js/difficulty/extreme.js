@@ -1,5 +1,5 @@
-let playerScore = 7;
-let botScore = 7;
+let playerScore = 1;
+let botScore = 1;
 let timer;
 let turn = 'player'; // 'player' or 'bot'
 
@@ -97,8 +97,8 @@ const updateScore = (player, decrement = false) => {
 
 // Function to reset the game
 const resetGame = () => {
-    playerScore = 7;
-    botScore = 7;
+    playerScore = 1;
+    botScore = 1;
     document.querySelector("#score").textContent = `Pass Left - Player: ${playerScore} | Bot: ${botScore}`;
     resetInputForms();
     switchTurn('player');
@@ -117,7 +117,7 @@ const resetInputForms = () => {
 let prevSearch = "";
 const playerInputHandler = (e) => {
     const search = e.target.value;
-    fetch("/single-player-search", {
+    fetch("/extreme-single-player-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ "search": search })

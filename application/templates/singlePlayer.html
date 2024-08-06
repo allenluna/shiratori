@@ -13,18 +13,18 @@
             <h1 class="text-center">SINGLE PLAYER</h1>
         </div>
         <div class="card-body text-center card-body-day">
-            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#profile">
+            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#easyProfile">
                 <div class="player mb-3">Easy</div>
             </a>              
             
             
-            <a class="text-decoration-none text-white">
+            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#mediumProfile">
                 <div class="player mb-3">Medium</div>
             </a>              
-            <a class="text-decoration-none text-white">
+            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#hardProfile">
                 <div class="player mb-3">Hard</div>
             </a>              
-            <div class="player mb-3">
+            <div class="player mb-3" data-bs-toggle="modal" data-bs-target="#extremeProfile">
                 <a href="#" >Extreme</a>              
             </div>
         </div>
@@ -32,8 +32,8 @@
 </section>
 
 
-<!-- Post Modal -->
-<div class="modal fade modal-xl" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- Easy Modal -->
+<div class="modal fade modal-xl" id="easyProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header" id="modal-header">
@@ -41,19 +41,77 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">
-            <main class="profile" id="player-profile">
-                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" alt="Duck"></a></div>
-                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" alt="Duck"></a></div>
-                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" alt="Duck"></a></div>
+            <main class="profile" id="easy-player-profile">
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" id="1" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" id="3" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" id="2" alt="Duck"></a></div>
             </main>
         </div>
       </div>
     </div>
 </div>
 
+<!-- Medium Modal -->
+<div class="modal fade modal-xl" id="mediumProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <main class="profile" id="medium-player-profile">
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" id="1" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" id="3" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" id="2" alt="Duck"></a></div>
+            </main>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Hard Modal -->
+<div class="modal fade modal-xl" id="hardProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <main class="profile" id="hard-player-profile">
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" id="1" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" id="3" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" id="2" alt="Duck"></a></div>
+            </main>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Extreme Modal -->
+<div class="modal fade modal-xl" id="extremeProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <main class="profile" id="extreme-player-profile">
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img1.png') }}" id="1" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img3.png') }}" id="3" alt="Duck"></a></div>
+                <div class="c-profile"><a href="#"><img src="{{ url_for('static', filename='assets/img2.png') }}" id="2" alt="Duck"></a></div>
+            </main>
+        </div>
+      </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}
 <script src="{{ url_for('static', filename='js/back.js') }}"></script>
-<script src="{{ url_for('static', filename='js/difficulty/difficulty.js') }}"></script>
+<script src="{{ url_for('static', filename='js/difficulty/easy.js') }}"></script>
 {% endblock %}

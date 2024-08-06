@@ -2,7 +2,8 @@
 
 {% block body%}
 
-<section class="options">
+<section class="options position-relative">
+     <a href="{{ url_for('auth.logout') }}" class="text-danger fs-3 text-decoration-none logout">Logout</a>
     <div class="card card-data">
         <div class="logos">
             <img src="{{ url_for('static', filename='assets/img1.png') }}" alt="">
@@ -26,8 +27,8 @@
                 </div>
             </a>              
             
-            <div class="player mb-3" onclick="alert('Ongoing Development')">
-                <a href="#" >Multi Player</a>              
+            <div class="player mb-3">
+                <a href="{{ url_for('view.multi_player') }}" >Multi Player</a>              
             </div>
             {% if current_user.is_admin == "admin" %}
                 <a href="{{ url_for('view.add_words') }}" class="text-decoration-none text-white">

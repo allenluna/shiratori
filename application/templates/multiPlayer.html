@@ -1,0 +1,49 @@
+{% extends "base.html" %} 
+{% block title %} Multi Player {% endblock %}
+
+{% block body %}
+
+<section class="multiplayer">
+    <div class="lobby-nav">
+        <div class="multi-back" id="back-to">
+            <i class="bi bi-chevron-left"></i>Back
+        </div>
+        <div class="btn btn-success" id="createLobby"  data-bs-toggle="modal" data-bs-target="#createLobbyModal"> <i class="bi bi-plus"></i> Create Lobby</div>
+    </div>
+
+    <main class="lobby" id="lobby">
+        <div class="lobbyTittle">
+            <h1 class="text-center">Lobby</h1>
+        </div>
+
+    </main>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="createLobbyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Lobby</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="name" class="col-form-label">Lobby Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Lobby Name">
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" id="btnCreateLobby">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/back.js') }}"></script>
+<script src="{{ url_for('static', filename='js/multiplayer.js') }}"></script>
+{% endblock %}

@@ -1,12 +1,74 @@
-{% extends "base.html" %} {% block title %} Extreme {% endblock %}
+{% extends "base.html" %}
+
+{% block title %}
+    Extreme
+{% endblock %}
 
 {% block body %}
 
+<section class="manage" style="height: 90vh; overflow-y: auto;">
+    <div class="container" style="max-height: 90vh; overflow-y: auto;">
+        <a class="history" type="button" data-bs-toggle="offcanvas" data-bs-target="#history" aria-controls="offcanvasScrolling"><i class="bi bi-book"></i></a>
+        <a class="quit" href="{{ url_for('view.single_player') }}">QUIT</a>
+        <h2 class="text-center py-3">Single Player</h2>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p id="timer">Time left: 30s</p>
+                <p id="score"></p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card position-relative">
+                    <div class="single-player-profile">
+                        <img src="{{ url_for('static', filename=player) }}" alt="Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12 text-center">
+                            <label for="player-word" class="form-label">Player</label>
+                            <div class="input-group">
+                                <input type="text" name="player_word" class="form-control" id="player-word" required placeholder="Word" autocomplete="off">
+                                <span class="input-group-text" id="word-icon"></span>
+                            </div>
+                        </div>
+                        <div class="py-2" id="player-result"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card position-relative">
+                    <div class="single-player-profile">
+                        <img src="{{ url_for('static', filename=bot) }}" alt="Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12 text-center">
+                            <label for="bot-word" class="form-label">Bot</label>
+                            <input disabled type="text" name="bot_word" class="form-control" id="bot-word" required placeholder="Word" autocomplete="off">
+                        </div>
+                        <div id="bot-result" class="py-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" id="modal-result"></div>
+</div>
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="history" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul id="history-list" class="list-group"></ul>
+    </div>
+</div>
 
 {% endblock %}
 
-
 {% block script %}
+<script src="{{ url_for('static', filename='js/difficulty/extreme.js') }}"></script>
 
 {% endblock %}
