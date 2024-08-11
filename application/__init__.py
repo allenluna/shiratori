@@ -4,7 +4,7 @@ from flask_login import LoginManager
 import os
 from flask_session import Session
 from dotenv import load_dotenv
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from flask_migrate import Migrate
 
 db = SQLAlchemy()

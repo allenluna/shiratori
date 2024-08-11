@@ -1,6 +1,5 @@
 // Initialize Socket.IO
 var socket = io();
-
 // Define variables
 const playerFormsContainer = document.querySelector("#playerFormsContainer");
 const currentUserElement = document.querySelector("#current_user");
@@ -42,21 +41,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     // Add event listener for the Start Game button
-    document.getElementById('startGameBtn').addEventListener('click', () => {
-        socket.emit('start_game');
-    });
+    startTheGame()
+    stopTime();
 
     // Listen for the reload_page event
     socket.on('reload_page', () => {
         startTimer(); // Start the timer when the game starts
         getCurrentTurn(); // Update input states correctly
     });
+    socket.on("stop_page", () => {
+        clearInterval(timer)
+    })
 
-    // Listen for turn_changed event
     socket.on('turn_changed', () => {
-        getCurrentTurn(); // Update input states when turn changes
+        getCurrentTurn(); 
     });
 });
+const startTheGame = () => {
+    document.getElementById('startGameBtn').addEventListener('click', () => {
+        socket.emit('start_game');
+    });
+}
+
+const stopTime = () => {
+    document.querySelector('#stop-timer').addEventListener('click', () => {
+        socket.emit('stop_game'); // Emit event to stop the timer in both windows
+        // Optionally add a small delay before reloading to ensure the event is processed
+        setTimeout(() => {
+            location.reload(); // Reload the page to reflect changes
+        }, 100); // Adjust the delay if necessary
+    });
+}
+
+
 
 const fetchLobbyId = () => {
     return fetch('/get-lobby-id')
@@ -80,8 +97,8 @@ const startTimer = () => {
         }
     }, 1000);
 };
-
 const switchTurn = () => {
+    // console.log(currentUserName)
     fetch('/switch-turn', {
         method: 'POST',
         headers: {
@@ -104,10 +121,10 @@ const getCurrentTurn = () => {
     fetch('/get-turn?user_name=' + encodeURIComponent(loginUserName))
         .then(response => response.json())
         .then(data => {
-            const isUserTurn = data.is_user_turn; // true or false
-            const currentTurn = data.current_turn;
+            let isUserTurn = data.is_user_turn;
+            let currentTurn = data.current_turn;
             if (currentTurn === player1Name) {
-                if (isUserTurn) {
+                if (isUserTurn) { 
                     enablePlayer1Form();
                 } else {
                     disableAllForms();
@@ -126,6 +143,7 @@ const getCurrentTurn = () => {
         .catch(error => console.error('Error fetching turn:', error));
 };
 
+
 const updateLabels = (currentTurn) => {
     const player1Label = document.querySelector("#player1_label");
     const player2Label = document.querySelector("#player2_label");
@@ -143,10 +161,29 @@ const updateLabels = (currentTurn) => {
     }
 };
 
+let player1Scores = 0;
+let player2Scores = 0;
+
+let updateScore = (playerScore,currentTurn) => {
+    
+    if(currentTurn === player1Name){
+        let player1Score = document.querySelector(`#${playerScore}-score`);
+        player1Scores++;
+        player1Score.innerHTML = player1Scores
+    }else if(currentTurn === player2Name){
+        let player2Score = document.querySelector(`#${playerScore}-score`);
+        player2Scores++; 
+        player2Score.innerHTML = player2Scores
+    }
+}
+
 
 let setArray = (arr) => {
     return new Set([arr])
 }
+
+
+
 
 const enablePlayer1Form = () => {
     const player1WordInput = document.querySelector("#player1_word");
@@ -163,8 +200,8 @@ const enablePlayer1Form = () => {
         
         player1Btn.addEventListener("click", () => {
             let answer = player1WordInput.value;
-            player1Answers.push(answer)
-            console.log(player1Answers[player1Answers.length - 1])
+
+
             const historyList = document.getElementById('history-list');
             const item = document.createElement('li');
             item.className = 'list-group-item';
@@ -182,6 +219,14 @@ const enablePlayer1Form = () => {
                 const wordIcon = document.querySelector("#word-icon");
                 const modalResult = document.querySelector("#modal-result");
                 playerResultDiv.innerHTML = "";
+
+                if(res.data.length == 0){
+                    const modal = new bootstrap.Modal(document.getElementById('lose'));
+                    modal.show()
+                    socket.on("stop_page", () => {
+                        clearInterval(timer)
+                    })
+                }
 
                 res.data.forEach(player => {
                     const cardDiv = document.createElement("div");
@@ -222,9 +267,6 @@ const enablePlayer2Form = () => {
 
         player2Btn.addEventListener("click", () => {
             let answer = player2WordInput.value;
-
-            player2Answers.push(answer)
-
             const historyList = document.getElementById('history-list');
             const item = document.createElement('li');
             item.className = 'list-group-item';
@@ -242,6 +284,15 @@ const enablePlayer2Form = () => {
                 const wordIcon = document.querySelector("#word-icon");
                 const modalResult = document.querySelector("#modal-result");
                 playerResultDiv.innerHTML = "";
+
+                if(res.data.length == 0){
+                    const modal = new bootstrap.Modal(document.getElementById('lose'));
+                    modal.show()
+                    stopTime()
+                    socket.on("stop_page", () => {
+                        clearInterval(timer)
+                    })
+                }
 
                 res.data.forEach(player => {
                     const cardDiv = document.createElement("div");
@@ -291,6 +342,7 @@ const disableAllForms = () => {
 const initializePlayerForms = () => {
     const player1Form = `
         <div class="col-md-6 mb-4">
+            <div id="${player1Name}-score">Score: </div>
             <div class="card position-relative">
                 <label id="player1_label" for="player1_word" class="form-label text-center fs-3 pt-3">${player1Name}</label>
                 <div class="card-body">
@@ -312,6 +364,7 @@ const initializePlayerForms = () => {
 
     const player2Form = `
         <div class="col-md-6 mb-4">
+            <div id="${player2Name}-score">Score: </div>
             <div class="card position-relative">
                 <label id="player2_label" for="player2_word" class="form-label text-center fs-3 pt-3">${player2Name}</label>
                 <div class="card-body">

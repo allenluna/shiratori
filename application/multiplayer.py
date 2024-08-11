@@ -5,6 +5,8 @@ from flask_login import login_required, current_user
 from sqlalchemy.sql.expression import func
 from .controller import datas
 from flask import session
+from . import socketio
+from flask_socketio import emit
 
 multiplayer = Blueprint("multiplayer", __name__)
 
@@ -71,7 +73,7 @@ def quit_lobby(lobby_id):
     lobby_user = Lobby_User.query.filter_by(lobby_id=lobby_id, user_id=current_user.id).first()
     
     if not lobby_user:
-        return "You are not in this lobby", 400
+        return redirect(url_for("view.home"))
     
     session.pop('lobby_id', None)
     # Remove the user from the lobby
@@ -98,23 +100,7 @@ def player_answer():
 
             if not player1 or player1_answer is None:
                 return jsonify({"error": "Invalid player ID or answer."})
-
-            # if not isinstance(player1.answer, list):
-            #     player1.answer = []
-
-            # if player1_answer in player1.answer:
-            #     return jsonify({"error": "Player 2's answer already used."})
-
-            # print(type(player1.answer))
-            # if player2_answer in player1_answers:
-            #     return jsonify({"error": "Player 2's answer is the same as Player 1's answer."})
-
-            # player1.answer.append(player1_answer)
-            # try:
-            #     db.session.commit()
-            # except Exception as e:
-            #     db.session.rollback()
-            #     return jsonify({"error": "Database commit failed.", "message": str(e)})
+            print(player1_answer)
 
             search_data = Player.query.filter(Player.word.like(f'%{player1_answer}%')).order_by(func.random()).limit(1).all()
             result_data = [datas(data) for data in search_data]
@@ -124,31 +110,24 @@ def player_answer():
         if player2_answer:
             player2_id = int(data.get("player2_id", 0))
             player2 = User.query.get(player2_id)
-            
                 
             if not player2 or player2_answer is None:
                 return jsonify({"error": "Invalid player ID or answer."})
-
-            # if not isinstance(player2.answer, list):
-            #     player2.answer = []
-
-            # print(type(player2.answer))
-            # if player2_answer in player2.answer:
-            #     return jsonify({"error": "Player 2's answer already used."})
-
-            # if player2_answer in player1_answers:
-            #     return jsonify({"error": "Player 2's answer is the same as Player 1's answer."})
-
-            # player2.answer.append(player2_answer)
-            # try:
-            #     db.session.commit()
-            # except Exception as e:
-            #     db.session.rollback()
-            #     return jsonify({"error": "Database commit failed.", "message": str(e)})
-
+        
+            print(player2_answer)
             search_data = Player.query.filter(Player.word.like(f'%{player2_answer}%')).order_by(func.random()).limit(1).all()
             result_data = [datas(data) for data in search_data]
             return jsonify({"data": result_data})
 
     except Exception as e:
         return jsonify({"error": "An unexpected error occurred", "message": str(e)}), 500
+
+@socketio.on("player1-answer")
+def player_answer(answer):
+    
+    print(f"This is player1 {answer}")
+    
+@socketio.on("player2-answer")
+def player_answer(answer):
+    
+    print(f"This is player2 {answer}")

@@ -17,7 +17,7 @@
             <div class="col-md-12 text-center">
                 <p id="timer">Time left: 5s</p>
                 <p id="score"></p>
-                <button id="startGameBtn">Start Game</button>
+                <button id="startGameBtn" class="btn btn-success mb-3">Start Game</button>
             </div>
             <div id="playerFormsContainer" class="row">
                 <!-- Forms will be dynamically inserted here -->
@@ -28,7 +28,7 @@
 <section class="users">
     <div id="player1" data-player="{{player1_name}}"></div>
     <div id="player2" data-player="{{player2_name}}"></div>
-    <div id="current_user" data-username="{{ user_turn }}"></div>
+    <div id="current_user" data-username="{{ user_turn.name }}"></div>
     <div id="login_user" data-username="{{ login_user_current.name }}"></div>
     <div id="plyr1" data-id="{{ plyr1 }}"></div>
     <div id="plyr2" data-id="{{ plyr2}}"></div>
@@ -46,9 +46,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="lose" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Dictionary</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+            <h1 class="text-danger text-bold">You Lose!</h1>
+            <p class="mt-2">Wanna Try Again?</p>
+            <button class="btn btn-danger" id="stop-timer">Start Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"></script> -->
+<script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/fight.js') }}"></script>
 {% endblock %}

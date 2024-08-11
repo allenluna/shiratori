@@ -9,9 +9,9 @@ from . import socketio  # Import socketio from __init__.py
 
 view = Blueprint("view", __name__)
 
-@socketio.on('start_game')
-def handle_start_game():
-    emit('reload_page', broadcast=True)
+# @socketio.on('start_game')
+# def handle_start_game():
+#     emit('reload_page', broadcast=True)
 
 @view.route("/")
 def home():
@@ -48,10 +48,9 @@ def fight_lobby(lobby_id):
     if not any(player.turn for player in players_user):  # If no player has a turn
         players_user[0].turn = True
         db.session.commit()  # Save the changes to the database
-
+        
     # Check whose turn it is
     current_turn = next((player for player in players_user if player.turn), players_user[0])
-    
     return render_template('fight.html',
                            lobby_id=lobby_id,
                            player1_name=players_user[0].name if len(players_user) > 0 else 'Unknown',
@@ -67,6 +66,7 @@ def switch_turn():
     lobby_id = request.json.get('lobby_id')
     if isinstance(lobby_id, str) and not lobby_id.isdigit():
         return jsonify({'success': False, 'message': 'Invalid lobby ID'}), 400
+
     lobby_id = int(lobby_id)
     lobby_users = Lobby_User.query.filter_by(lobby_id=lobby_id)
     players = [User.query.get(user.user_id) for user in lobby_users]
@@ -76,30 +76,31 @@ def switch_turn():
         return jsonify({'success': False, 'message': 'Not enough players'}), 400
 
     current_turn_player = next((player for player in players_user if player.turn), None)
-    
+    current_turn_player = User.query.filter_by(turn=True).first()
+    # print(current_turn_player.name)
     if current_turn_player:
-        current_turn_player.turn = False  # End the current player's turn
-        next_player = players_user[1] if current_turn_player == players_user[0] else players_user[0]
-        next_player.turn = True  # Start the next player's turn
-        db.session.commit()  # Save the changes to the database
-        
-        # Notify all players about the turn change
-        socketio.emit('turn_changed')
+        current_turn_player.turn = False
+        db.session.commit()
 
-        return jsonify({'success': True, 'new_turn': next_player.name})
-    
-    return jsonify({'success': False, 'message': 'Turn could not be switched'}), 400
+        # Switch to the next player
+        next_turn_player = players_user[(players_user.index(current_turn_player) + 1) % len(players_user)]
+        next_turn_player.turn = True
+        db.session.commit()
+
+        return jsonify({'success': True, 'message': 'Turn switched successfully'})
+    else:
+        return jsonify({'success': False, 'message': 'Current turn player not found'}), 400
+
 
 @view.route('/get-turn')
 def get_turn():
     user_name = request.args.get('user_name')
     if not user_name:
         return jsonify({'is_user_turn': False, 'current_turn': None}), 400
-
+    print(user_name)
     current_turn_player = User.query.filter_by(turn=True).first()
     current_turn = current_turn_player.name if current_turn_player else None
-    is_user_turn = (user_name == current_turn)
-
+    is_user_turn = (current_user.name == current_turn)
     return jsonify({
         'is_user_turn': is_user_turn,
         'current_turn': current_turn
@@ -109,6 +110,7 @@ def get_turn():
 @view.route('/get-lobby-id', methods=['GET'])
 def get_lobby_id():
     lobby_id = session.get('lobby_id')
+    print(lobby_id)
     if not lobby_id:
         return jsonify({'error': 'Lobby ID not found'}), 404
     return jsonify({'lobby_id': lobby_id})
@@ -116,6 +118,11 @@ def get_lobby_id():
 @socketio.on('start_game')
 def handle_start_game():
     emit('reload_page', broadcast=True)
+    
+    
+@socketio.on('stop_game')
+def handle_stop_game():
+    emit('stop_page', broadcast=True)
 
 @view.route("/lobby-full")
 def lobby_full():

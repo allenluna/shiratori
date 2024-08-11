@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     is_admin = db.Column(db.String(10))
     turn = db.Column(db.Boolean, default=False)
     answer = db.Column(JSON, default=[])
+    score = db.Column(db.Integer, default=0)
     
 
 class Player(db.Model):
