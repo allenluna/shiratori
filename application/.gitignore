@@ -1,7 +1,3 @@
 __pycache__
 .vscode
 .env
-
-../flask_session
-../migrations
-../venv
