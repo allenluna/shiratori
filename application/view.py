@@ -97,10 +97,11 @@ def get_turn():
     user_name = request.args.get('user_name')
     if not user_name:
         return jsonify({'is_user_turn': False, 'current_turn': None}), 400
-    print(user_name)
+    # print(user_name)
     current_turn_player = User.query.filter_by(turn=True).first()
     current_turn = current_turn_player.name if current_turn_player else None
     is_user_turn = (current_user.name == current_turn)
+    print(current_turn)
     return jsonify({
         'is_user_turn': is_user_turn,
         'current_turn': current_turn
@@ -110,7 +111,6 @@ def get_turn():
 @view.route('/get-lobby-id', methods=['GET'])
 def get_lobby_id():
     lobby_id = session.get('lobby_id')
-    print(lobby_id)
     if not lobby_id:
         return jsonify({'error': 'Lobby ID not found'}), 404
     return jsonify({'lobby_id': lobby_id})
