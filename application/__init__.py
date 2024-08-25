@@ -6,12 +6,10 @@ from flask_session import Session
 from dotenv import load_dotenv
 from flask_socketio import SocketIO
 from flask_migrate import Migrate
-import eventlet
 
-eventlet.monkey_patch()
 
 db = SQLAlchemy()
-# socketio = SocketIO(async_mode='eventlet') 
+socketio = SocketIO() 
 migrate = Migrate()
 def create_app():
     app = Flask(__name__)
