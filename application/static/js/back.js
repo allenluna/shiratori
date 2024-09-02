@@ -1,4 +1,4 @@
 
 document.querySelector("#back-to").addEventListener("click", () => {
-    window.history.back()
+    window.location.href = "/"
 })
