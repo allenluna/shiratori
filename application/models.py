@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy import JSON
 from sqlalchemy.orm import Relationship
 
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +15,8 @@ class User(UserMixin, db.Model):
     turn = db.Column(db.Boolean, default=False)
     answer = db.Column(JSON, default=[])
     score = db.Column(db.Integer, default=0)
+    reset_token = db.Column(db.String(10000), nullable=True)
+    reset_token_expiration = db.Column(db.DateTime, nullable=True)
     
 
 class Player(db.Model):

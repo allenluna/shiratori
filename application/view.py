@@ -220,3 +220,6 @@ def extreme():
     
     bot = f"assets/img{bot_int}.png"
     return render_template("difficulty/extreme.html", player=player, bot=bot)
+
+################## Forgot Password ################
+

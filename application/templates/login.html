@@ -45,7 +45,7 @@
         placeholder="Password"
       />
     </div>
-    <a href="#" class="text-end pb-3">Forgot Password?</a>
+    <a href="{{ url_for('auth.forgot_password') }}" class="text-end pb-3">Forgot Password?</a>
     <div class="text-center">
       <button type="submt" class="btn btn-dark w-50 w-md-25 text-center">Login</button>
       <p><a href="{{ url_for('auth.register') }}">Sign Up</a></p>
