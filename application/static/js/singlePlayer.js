@@ -102,6 +102,7 @@ const resetGame = () => {
     document.querySelector("#score").textContent = `Pass Left - Player: ${playerScore} | Bot: ${botScore}`;
     resetInputForms();
     switchTurn('player');
+    // window.location.reload();
 };
 
 // Function to reset input forms
@@ -192,7 +193,8 @@ const botPlayer = (data) => {
 
         if (res.data.length === 0) {
             // Bot failed to find a word, decrease botScore and switch turn
-            updateScore('bot', true); // Decrease bot's score
+             // Decrease bot's score
+            updateScore('bot', true);
             switchTurn('player');
             return;
         }
@@ -212,6 +214,7 @@ const botPlayer = (data) => {
                 </div>
             `;
             botResult.appendChild(cardDiv);
+            updateScore('bot', true);
         });
 
         switchTurn('player');

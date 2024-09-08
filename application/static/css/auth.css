@@ -7,6 +7,16 @@
     flex-direction: column;
 }
 
+.auth-form{
+    height: 100vh;
+}
+
+.auth-form-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 
 form{
     display: flex;

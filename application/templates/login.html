@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block title %}Login{% endblock %} {% block body %}
-
-<div class="container">
+<div class="auth-form">
+<div class="container auth-form-center">
   {% with messages = get_flashed_messages() %} {% if messages %} {% for message
   in messages %}
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -20,7 +20,7 @@
     ></button>
   </div>
   {% endfor %} {% endif %} {% endwith %}
-  <form class="container mt-5 w-50 w-md-50 p-5 position-relative auth-container" method="post">
+  <form class="container w-50 w-md-50 p-5 position-relative auth-container" method="post">
     <img src="{{ url_for('static', filename='assets/img1.png') }}" class="login-img" alt="image-1">
     <h1 class="text-center">AGKAS</h1>
     <p class="text-center">Kapampangan Words</p>
@@ -52,5 +52,6 @@
     </div>
   </form>
   </div>
+</div>
   
 {% endblock %}

@@ -192,7 +192,7 @@ const botPlayer = (data) => {
 
         if (res.data.length === 0) {
             // Bot failed to find a word, decrease botScore and switch turn
-            updateScore('bot', true); // Decrease bot's score
+              // Decrease bot's score
             switchTurn('player');
             return;
         }
@@ -211,7 +211,8 @@ const botPlayer = (data) => {
                     <p class="card-title">Ang <span class="fw-bold text-red">${bot.word}</span> ay <span class="fw-bold text-red">${bot.meaning}</span> sa tagalog</p>
                 </div>
             `;
-            botResult.appendChild(cardDiv);
+            botResult.appendChild(cardDiv);    
+            updateScore('bot', true);                              
         });
 
         switchTurn('player');

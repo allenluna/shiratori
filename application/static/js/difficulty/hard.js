@@ -212,6 +212,7 @@ const botPlayer = (data) => {
                 </div>
             `;
             botResult.appendChild(cardDiv);
+            updateScore('bot', true);
         });
 
         switchTurn('player');
