@@ -30,7 +30,7 @@
             <div class="player mb-3">
                 <a href="{{ url_for('view.multi_player') }}" >Multi Player</a>              
             </div>
-            {% if current_user.is_admin == "admin" %}
+            {% if current_user.id == 1 %}
                 <a href="{{ url_for('view.add_words') }}" class="text-decoration-none text-white">
                     <div class="player mb-3">Manage</div>
                 </a>

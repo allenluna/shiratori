@@ -136,7 +136,7 @@ def lobby_full():
 @view.route("/manage", methods=["GET", "POST"])
 def add_words():
     
-    if current_user.is_admin != "admin":
+    if current_user.id != 1:
         return redirect(url_for("view.home"))
     
     return render_template("addWords.html", current_user=current_user)

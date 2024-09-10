@@ -106,7 +106,7 @@ def forgot_password():
             
             # Send email with reset link (you would implement send_email function)
             reset_url = url_for('auth.reset_password', token=token, _external=True)
-            send_email(user.email, "Password Reset", f"Click to reset your password: {reset_url}")
+            send_email(user.email, "Password Reset", f"{user.email}, Click to reset your password: {reset_url}")
             
             flash("A password reset link has been sent to your email.", "success")
         else:
