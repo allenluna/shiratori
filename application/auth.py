@@ -21,7 +21,7 @@ def register():
         username = request.form.get("username")
         email = request.form.get("email")
         password = generate_password_hash(request.form.get("password"), method="pbkdf2:sha256", salt_length=8)
-        status = request.form.get("status")
+        # status = request.form.get("status")
         user = User.query.filter(or_(User.email == email, User.username == username)).first()
         
         if user:
@@ -32,12 +32,10 @@ def register():
             flash("Email is required.")
         elif password == "":
             flash("Password is required.")
-        elif status == "":
-            flash("Status is required.")
         elif len(password) < 8:
             flash("Password is too short.")
         else:
-            new_user = User(name=name, username=username ,email=email, password=password, is_admin=status)
+            new_user = User(name=name, username=username ,email=email, password=password, is_admin="student")
             db.session.add(new_user)  
             db.session.commit()
             
