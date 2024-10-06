@@ -20,6 +20,7 @@ def create_app():
     # postgresql://agkas_cq36_user:StRxiMnN8jw1r5VFQDzqam4TAuwNA8xg@dpg-cran70dds78s73d6vi0g-a.oregon-postgres.render.com/agkas_cq36
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SESSION_PERMANENT'] = False
     app.config['SESSION_USE_SIGNER'] = True

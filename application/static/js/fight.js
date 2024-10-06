@@ -41,20 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     // Add event listener for the Start Game button
-    startTheGame()
+    startTheGame();
     stopTime();
 
-    // Listen for the reload_page event
-    socket.on('reload_page', () => {
+    socket.on('game_started', () => {
         startTimer(); // Start the timer when the game starts
         getCurrentTurn(); // Update input states correctly
     });
-    socket.on("stop_page", () => {
-        clearInterval(timer)
-    })
-
-    socket.on('turn_changed', () => {
-        getCurrentTurn(); 
+    
+    socket.on('game_stopped', () => {
+        clearInterval(timer); // Stop the timer
+    });
+    
+    // Listen for turn changes
+    // socket.on('turn_changed', (data) => {
+    //     console.log(`Turn switched to: ${data.current_turn}`);
+    //     getCurrentTurn(); // Update the UI with the new turn
+    //     startTimer(); // Restart the timer for the new turn
+    // });
+    
+    // Handle turn switch errors
+    socket.on('turn_switch_error', (data) => {
+        console.log(data.message); // Display the error message to the user
     });
 });
 const startTheGame = () => {
@@ -97,51 +105,75 @@ const startTimer = () => {
         }
     }, 1000);
 };
+
 const switchTurn = () => {
-    // console.log(currentUserName)
-    fetch('/switch-turn', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 'lobby_id': lobbyId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            getCurrentTurn();
-            startTimer(); // Restart the timer for the new turn
-        }
-    })
-    .catch(error => console.error('Error switching turn:', error));
+    // Emit a Socket.IO event to switch turns
+    socket.emit('switch_turn', lobbyId);
 };
 
+
+socket.on('turn_changed', (data) => {
+    console.log(`Turn switched to: ${data.current_turn}`);
+    
+    // Fetch current turn only if it is not the same as current
+    getCurrentTurn(); // This should work if the server logic correctly identifies the current turn.
+    startTimer(); // Restart the timer for the new turn
+});
+
+
+// const switchTurn = () => {
+//     // console.log(currentUserName)
+//     fetch('/switch-turn', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ 'lobby_id': lobbyId })
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//             getCurrentTurn();
+//             startTimer(); // Restart the timer for the new turn
+//         }
+//     })
+//     .catch(error => console.error('Error switching turn:', error));
+// };
+// Function to get the current turn via Socket.IO
 const getCurrentTurn = () => {
-    // console.log('Fetching current turn');
-    fetch('/get-turn?user_name=' + encodeURIComponent(loginUserName))
-        .then(response => response.json())
-        .then(data => {
-            let isUserTurn = data.is_user_turn;
-            let currentTurn = data.current_turn;
-            if (currentTurn === player1Name) {
-                if (isUserTurn) { 
-                    enablePlayer1Form();
-                } else {
-                    disableAllForms();
-                }
-            } else if (currentTurn === player2Name) {
-                if (isUserTurn) {
-                    enablePlayer2Form();
-                } else {
-                    disableAllForms();
-                }
-            } else {
-                // console.log('Disabling all forms');
-                disableAllForms(); // Disable all forms if it’s not the current user’s turn
-            }
-        })
-        .catch(error => console.error('Error fetching turn:', error));
+    // Emit the get_turn event to the server
+    socket.emit('get_turn');
 };
+
+// Listen for the response from the server
+socket.on('turn_status', (data) => {
+    const { is_user_turn, current_turn } = data;
+
+    console.log(`Current turn: ${current_turn}, Is user's turn: ${is_user_turn}`); // Debugging log
+    if (current_turn === player1Name) {
+        if (is_user_turn) { 
+            enablePlayer1Form();
+        } else {
+            disableAllForms();
+        }
+    } else if (current_turn === player2Name) {
+        if (is_user_turn) {
+            enablePlayer2Form();
+        } else {
+            disableAllForms();
+        }
+    } else {
+        disableAllForms(); // Disable all forms if it’s not the current user’s turn
+    }
+});
+
+// Listen for turn changes
+socket.on('turn_changed', (data) => {
+    console.log(`Turn switched to: ${data.current_turn}`);
+    getCurrentTurn(); // Update the UI with the new turn
+    startTimer(); // Restart the timer for the new turn
+});
+
 
 
 const updateLabels = (currentTurn) => {
@@ -384,3 +416,9 @@ const initializePlayerForms = () => {
 
     playerFormsContainer.innerHTML = player1Form + player2Form;
 };
+
+document.querySelector('.history').addEventListener('mouseenter', function() {
+    var offcanvas = new bootstrap.Offcanvas(document.getElementById('history'));
+    offcanvas.show();
+});
+

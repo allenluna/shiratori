@@ -350,6 +350,15 @@ nav ul li img{
     font-size: 28px;
 }
 
+.quit-mul{
+    background-color: transparent;
+    border: none;
+}
+
+.quit-mul img{
+    width: 32px;
+}
+
 .quit img{
     width: 32px;
 }

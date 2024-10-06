@@ -63,6 +63,7 @@ def join_lobby(lobby_id):
     
     
 @multiplayer.route("/quit-lobby/<int:lobby_id>", methods=["POST"])
+@login_required
 def quit_lobby(lobby_id):
     # Find the lobby and the user in the lobby
     lobby = Multiplayer_Lobby.query.get_or_404(lobby_id)
@@ -70,7 +71,6 @@ def quit_lobby(lobby_id):
     
     if not lobby_user:
         return redirect(url_for("view.home"))
-    
     session.pop('lobby_id', None)
     # Remove the user from the lobby
     db.session.delete(lobby_user)
