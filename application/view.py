@@ -16,7 +16,7 @@ view = Blueprint("view", __name__)
 @view.route("/")
 def home():
     if not current_user.is_authenticated:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for('auth.login'))
     return render_template("home.html", current_user=current_user)
 
 @view.route("/single-player")
@@ -136,10 +136,10 @@ def lobby_full():
 @view.route("/manage", methods=["GET", "POST"])
 def add_words():
     
-    if current_user.id != 1:
-        return redirect(url_for("view.home"))
+    # if current_user.id != 1:
+    #     return redirect(url_for("view.home"))
     
-    return render_template("addWords.html", current_user=current_user)
+    return render_template("addWords.html")
 
 @view.route("/data-tables", methods=["GET", "POST"])
 def data_tables():
@@ -148,7 +148,7 @@ def data_tables():
     bots = Bot.query.all()
 
     
-    return render_template("dataTables.html", players=players, bots=bots ,current_user=current_user)
+    return render_template("dataTables.html", players=players, bots=bots )
 
 
 @view.route("/player-dictionary", methods=["GET", "POST"])
@@ -169,57 +169,29 @@ def bot_dictionary():
 ################################### options html ##########################################
 @view.route("/easy")
 def easy():
-    player = request.args.get("img")
-    if not player:
-        return "Player image parameter is missing", 400
     
-    bot_int = random.randint(1, 3)
-    while str(bot_int) in player:
-        bot_int = random.randint(1, 3)
-    
-    bot = f"assets/img{bot_int}.png"
-    return render_template("difficulty/easy.html", player=player, bot=bot)
+
+    return render_template("difficulty/easy.html", player=current_user)
 
 
 @view.route("/medium")
 def medium():
-    player = request.args.get("img")
-    if not player:
-        return "Player image parameter is missing", 400
     
-    bot_int = random.randint(1, 3)
-    while str(bot_int) in player:
-        bot_int = random.randint(1, 3)
-    
-    bot = f"assets/img{bot_int}.png"
-    return render_template("difficulty/medium.html", player=player, bot=bot)
+
+    return render_template("difficulty/medium.html", player=current_user)
 
 @view.route("/hard")
 def hard():
-    player = request.args.get("img")
-    if not player:
-        return "Player image parameter is missing", 400
     
-    bot_int = random.randint(1, 3)
-    while str(bot_int) in player:
-        bot_int = random.randint(1, 3)
-    
-    bot = f"assets/img{bot_int}.png"
-    return render_template("difficulty/hard.html", player=player, bot=bot)
+
+    return render_template("difficulty/hard.html", player=current_user)
 
 
 @view.route("/extreme")
 def extreme():
-    player = request.args.get("img")
-    if not player:
-        return "Player image parameter is missing", 400
     
-    bot_int = random.randint(1, 3)
-    while str(bot_int) in player:
-        bot_int = random.randint(1, 3)
-    
-    bot = f"assets/img{bot_int}.png"
-    return render_template("difficulty/extreme.html", player=player, bot=bot)
+
+    return render_template("difficulty/extreme.html", player=current_user)
 
 ################## Forgot Password ################
 

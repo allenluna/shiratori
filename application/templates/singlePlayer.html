@@ -4,29 +4,51 @@
 {% block body %}
 
 
-<section class="options">
-    <div class="back" id="back-to">
-        <i class="bi bi-chevron-left"></i>Back
+<section class="single-options">
+  
+  <nav>
+    <div id="wrapper">
+      <ul>
+        <li class="different">
+          <a href="{{ url_for('view.home') }}">
+            <img src="{{ url_for('static', filename='assets/home.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('view.single_player') }}">
+            <img src="{{ url_for('static', filename='assets/artificial-intelligence.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('view.multi_player') }}">
+            <img src="{{ url_for('static', filename='assets/vs.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img src="{{ url_for('static', filename='assets/brain.png') }}" alt="">
+          </a>
+        </li>
+      </ul>
     </div>
+  </nav>
+
     <div class="card-data">
-        <div class="card-header">
-            <h1 class="text-center">SINGLE PLAYER</h1>
-        </div>
         <div class="card-body text-center card-body-day">
-            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#easyProfile">
-                <div class="player mb-3">Easy</div>
-            </a>              
-            
-            
-            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#mediumProfile">
-                <div class="player mb-3">Medium</div>
-            </a>              
-            <a class="text-decoration-none text-white" data-bs-toggle="modal" data-bs-target="#hardProfile">
-                <div class="player mb-3">Hard</div>
-            </a>              
-            <div class="player mb-3" data-bs-toggle="modal" data-bs-target="#extremeProfile">
-                <a href="#" >Extreme</a>              
-            </div>
+            <div class="text-decoration-none difficulty-loc">
+                <a class="player mb-3 text-dark" href="{{ url_for('view.easy') }}" >Masagli</a>
+            </div>             
+            <div class="text-decoration-none difficulty-loc">
+                <a class="player mb-3 text-white"  href="{{ url_for('view.medium') }}">Medyu Masagli</a>
+            </div>              
+            <div class="text-decoration-none difficulty-loc">
+                <a class="player mb-3 text-white" href="{{ url_for('view.hard') }}">Masakit</a>
+            </div>  
+            <div href="#" class="difficulty-loc">          
+            <a class="player mb-3 text-white"  href="{{ url_for('view.extreme') }}">
+                Sobrang sakit             
+            </a>
+          </div> 
         </div>
     </div>
 </section>

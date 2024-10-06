@@ -3,17 +3,48 @@
 {% block body%}
 
 <section class="options position-relative">
-     <a href="{{ url_for('auth.logout') }}" class="text-danger fs-3 text-decoration-none logout">Logout</a>
-    <div class=" card-data">
-        <div class="logos">
+    <h3>Komusta Ka <span class="hero-name">{{ current_user.username }}</span></h3>
+    <br>
+    <h5>Malawus at mabyasa ka kening <span>AGKAS</span></h5>
+
+
+    <nav>
+        <div id="wrapper">
+          <ul>
+            <li class="different">
+              <a href="{{ url_for('view.home') }}">
+                <img src="{{ url_for('static', filename='assets/home.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('view.single_player') }}">
+                <img src="{{ url_for('static', filename='assets/artificial-intelligence.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('view.multi_player') }}">
+                <img src="{{ url_for('static', filename='assets/vs.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <img src="{{ url_for('static', filename='assets/brain.png') }}" alt="">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+     <!-- <a href="{{ url_for('auth.logout') }}" class="text-danger fs-3 text-decoration-none logout">Logout</a> -->
+    <!-- <div class=" card-data"> -->
+        <!-- <div class="logos">
             <img src="{{ url_for('static', filename='assets/img1.png') }}" alt="">
             <img src="{{ url_for('static', filename='assets/img3.png') }}" alt="">
             <img src="{{ url_for('static', filename='assets/img2.png') }}" alt="">
-        </div>
-        <div class="card-header">
+        </div> -->
+        <!-- <div class="card-header">
             <h1 class="text-center">AGKAS</h1>
         </div>
-        <div class="card-body text-center card-body-day">
+        <div class="card-body text-center card-body-day"> -->
             <!-- <div class="player mb-3" onclick="alert('Ongoing Development')">
                 <a href="#" >Instruction</a>              
             </div>
@@ -21,7 +52,7 @@
                 <a href="#" >Tutorial</a>              
             </div> -->
             
-            <a href="{{ url_for('view.single_player') }}" class="text-decoration-none text-white">
+            <!-- <a href="{{ url_for('view.single_player') }}" class="text-decoration-none text-white">
                 <div class="player mb-3">
                     Single Player
                 </div>
@@ -35,8 +66,8 @@
                     <div class="player mb-3">Manage</div>
                 </a>
             {% endif %}
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
 </section>
 
 

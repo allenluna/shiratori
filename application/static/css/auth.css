@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap');
+h1, h2, h3, h4, h5, h6, p, span, a{
+    font-family: "Klee One", cursive;
+    font-weight: 600;
+    font-style: normal;
+}
 .register{
     width: 100%;
     height: 100vh;
@@ -8,7 +15,17 @@
 }
 
 .auth-form{
-    height: 100vh;
+    height: 80vh;
+    position: relative;
+    overflow-y: hidden;
+    display: none;
+}
+
+.auth-form h5 span{
+    font-family: "Kavoon", serif;
+    font-weight: 600;
+    font-style: normal;
+    color:#de9878;
 }
 
 .auth-form-center{
@@ -17,15 +34,42 @@
     justify-content: center;
     flex-direction: column;
     height: 100%;
+    animation: nameshow 2s ease;
+    opacity: 1;
+}
+
+@keyframes nameshow{
+    from {
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
 
 form{
     display: flex;
     flex-direction: column;
     width: 100%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; */
     padding: 3%;
     border-radius: 50px;
+}
+
+.auth-container div input{
+    outline: none !important;
+    border: none !important;
+    background: #f5f3e6;
+    border-bottom: 1px solid black !important;
+    border-radius: 0 !important;
+    margin: 50px 0;
+}
+
+.auth-container div input:focus{
+    background-color: #f5f3e6 !important;
+    border-color: rgb(245, 243, 230);
+    box-shadow: none !important;
+    outline: 0 none;
 }
 
 .login-img{
@@ -34,6 +78,91 @@ form{
     position: absolute;
     top: -50px;
     left: -60px;
+}
+
+
+/* Main logo */
+/* .main-logo{
+text-align: center;
+background-color: red;
+} */
+.main-logo img{
+    position: absolute;
+    top: 60%;
+    left:  58%;
+    scale: 2;
+    transform: translate(-58%, -50%);
+    opacity: 0;
+    animation: logo-anim 1s ease-in;
+    /* z-index: 1; */
+}
+
+
+@keyframes logo-anim {
+
+    0%{
+        
+        position: absolute;
+        top: 105%;
+        left:  80%;
+        transform: translate(-58%, -50%);
+        scale: 5;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.carousel-data{
+    height: 88vh;
+    width: 70%;
+    margin: auto;
+}
+
+
+.carousel-inner{
+    height: 90vh;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.carousel-inner p{
+    padding: 200px 100px 100px 100px;
+    font-size: 40px;
+}
+
+.carousel-inner p span{
+    color: #de9878;
+    font-family: "Kavoon", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.home-btn{
+    background-color: #de9878 !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+}
+
+.taluki-p p{
+    padding-bottom: 0 !important;
+}
+
+.taluki{
+    background-color: #de9878;
+    color: #fff;
+    font-family: "Kavoon", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+}
+
+.taluki:hover{
+    background-color: #deaa92d3;
+    color: #fff;
 }
 
 @media screen and (max-width: 768px){

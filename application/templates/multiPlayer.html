@@ -4,16 +4,42 @@
 {% block body %}
 
 <section class="multiplayer">
+  <nav>
+    <div id="wrapper">
+      <ul>
+        <li class="different">
+          <a href="{{ url_for('view.home') }}">
+            <img src="{{ url_for('static', filename='assets/home.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('view.single_player') }}">
+            <img src="{{ url_for('static', filename='assets/artificial-intelligence.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('view.multi_player') }}">
+            <img src="{{ url_for('static', filename='assets/vs.png') }}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img src="{{ url_for('static', filename='assets/brain.png') }}" alt="">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <div class="lobby-nav">
         <div class="multi-back" id="back-to">
-            <i class="bi bi-chevron-left"></i>Back
+            <!-- <i class="bi bi-chevron-left"></i> -->
         </div>
-        <div class="btn btn-success" id="createLobby"  data-bs-toggle="modal" data-bs-target="#createLobbyModal"> <i class="bi bi-plus"></i> Create Lobby</div>
+        <div class="btn btn-success" id="createLobby"  data-bs-toggle="modal" data-bs-target="#createLobbyModal"> <i class="bi bi-plus"></i> Gawang Kwartu</div>
     </div>
 
     <main class="lobby" id="lobby">
         <div class="lobbyTittle">
-            <h1 class="text-center">Lobby</h1>
+            <h1 class="text-center">Kwartu</h1>
         </div>
 
     </main>
@@ -25,18 +51,18 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Lobby</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Gawang Kwartu</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="mb-3">
-                <label for="name" class="col-form-label">Lobby Name:</label>
-                <input type="text" class="form-control" id="name" placeholder="Lobby Name">
+                <!-- <label for="name" class="col-form-label">Lobby Name:</label> -->
+                <input type="text" class="form-control" id="name" placeholder="Gawa">
               </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" id="btnCreateLobby">Create</button>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sara</button> -->
+          <button type="button" class="btn btn-success" id="btnCreateLobby">Gawa</button>
         </div>
       </div>
     </div>

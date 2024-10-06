@@ -22,25 +22,25 @@ def register():
         email = request.form.get("email")
         password = generate_password_hash(request.form.get("password"), method="pbkdf2:sha256", salt_length=8)
         # status = request.form.get("status")
-        user = User.query.filter(or_(User.email == email, User.username == username)).first()
+        # user = User.query.filter(or_(User.email == email, User.username == username)).first()
         
-        if user:
-            flash("Already registered.")
-        elif name == "":
-            flash("Name is required.")
-        elif email == "":
-            flash("Email is required.")
-        elif password == "":
-            flash("Password is required.")
-        elif len(password) < 8:
-            flash("Password is too short.")
-        else:
-            new_user = User(name=name, username=username ,email=email, password=password, is_admin="student")
-            db.session.add(new_user)  
-            db.session.commit()
-            
-            login_user(new_user)
-            return redirect(url_for("view.home"))
+        # if user:
+        #     flash("Already registered.")
+        # elif name == "":
+        #     flash("Name is required.")
+        # elif email == "":
+        #     flash("Email is required.")
+        # elif password == "":
+        #     flash("Password is required.")
+        # elif len(password) < 8:
+        #     flash("Password is too short.")
+        # else:
+        new_user = User(username=username)
+        db.session.add(new_user)  
+        db.session.commit()
+        
+        login_user(new_user)
+        return redirect(url_for("view.home"))
     
     
     return render_template("register.html", current_user=current_user)
@@ -52,15 +52,21 @@ def login():
 
     username = request.form.get("username")
     password = request.form.get("password")
-    user = User.query.filter_by(username=username).first()
+    
     if request.method == "POST":
-        if not user:
-            flash("Email does not exists, please sign up.")
-        elif not check_password_hash(user.password, password):
-            flash("Incorrect password, try again.")
-        else:
-            login_user(user)
-            return redirect(url_for("view.home"))
+        # if not user:
+        #     flash("Email does not exists, please sign up.")
+        # elif not check_password_hash(user.password, password):
+        #     flash("Incorrect password, try again.")
+        # else:
+        #     login_user(user)
+        #     return redirect(url_for("view.home"))
+        new_user = User(username=username)
+        db.session.add(new_user)
+        db.session.commit()
+        user = User.query.filter_by(username=username).first()
+        login_user(user)
+        return redirect(url_for("view.home"))
 
     return render_template("login.html", current_user=current_user)
 
@@ -68,6 +74,9 @@ def login():
 @auth.route("/logout")
 @login_required
 def logout():
+    name = User.query.filter_by(name=current_user.name).first()
+    db.session.delete(name)
+    db.session.commit()
     logout_user()
 
     return redirect(url_for("auth.login"))

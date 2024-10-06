@@ -57,7 +57,7 @@ const lobby_items = (name, id, userData ,userCount = 0) => {
         <div class="lobby-name">${name}</div>
         <div class="user-join">
             ${userIndicators}
-            <div class="btn ${hasUsers ? 'btn-success' : 'btn-secondary'} join-btn" data-lobby-id="${id}" ${hasUsers ? '' : 'disabled'}>${hasUsers ? 'Join' : 'No users'}</div>
+            <div class="btn ${hasUsers ? 'btn-success' : 'btn-secondary'} join-btn" data-lobby-id="${id}" ${hasUsers ? '' : 'disabled'}>${hasUsers ? 'Makyabe' : 'Alang Tau'}</div>
         </div>
     `;
 

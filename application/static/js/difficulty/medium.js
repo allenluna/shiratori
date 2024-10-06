@@ -5,7 +5,7 @@ let turn = 'player'; // 'player' or 'bot'
 
 // Start timer function
 const startTimer = () => {
-    let timeLeft = 30;
+    let timeLeft = 20;
     document.querySelector("#timer").textContent = `Time left: ${timeLeft}s`;
 
     timer = setInterval(() => {
@@ -54,8 +54,9 @@ const switchTurn = (nextTurn) => {
 // Function to update the score and add history
 // Function to update the score and add history
 const updateScore = (player, decrement = false) => {
+    const playerName = document.querySelector("#player_name").textContent
     const answer = (player === 'player') ? document.querySelector("#player-word").value : document.querySelector("#bot-word").value;
-    const historyItem = (player === 'player') ? `Player answered: ${answer}` : `Bot answered: ${answer}`;
+    const historyItem = (player === 'player') ? `${playerName}: ${answer}` : `Kompyuter: ${answer}`;
 
     // Update score
     if (player === 'player') {
@@ -74,13 +75,14 @@ const updateScore = (player, decrement = false) => {
     // Add history item to offcanvas
     const historyList = document.getElementById('history-list');
     const item = document.createElement('li');
-    item.className = 'list-group-item';
+    // item.className = 'list-group-item';
     item.textContent = historyItem;
-    if (player === 'player') {
-        item.classList.add('list-group-item-primary');
-    } else {
-        item.classList.add('list-group-item-secondary');
-    }
+    item.style.listStyle = "none";
+    // if (player === 'player') {
+    //     item.classList.add('list-group-item-primary');
+    // } else {
+    //     item.classList.add('list-group-item-secondary');
+    // }
     historyList.appendChild(item);
     historyList.scrollTop = historyList.scrollHeight; // Scroll to bottom of history list
 
@@ -135,7 +137,7 @@ const playerInputHandler = (e) => {
             const cardDiv = document.createElement("div");
             cardDiv.className = "card mb-2";
             cardDiv.innerHTML = `
-                <button class="card-body border-0 outline-0" data-word="${player.word}">
+                <button class="card-body border-0 outline-0 p-2" data-word="${player.word}">
                     <h5 class="card-title">${player.word}</h5>
                 </button>
             `;
@@ -152,7 +154,9 @@ const playerInputHandler = (e) => {
                 document.querySelector("#player-word").value = player.word;
                 playerResultDiv.innerHTML = "";
 
-                wordIcon.innerHTML = `<i class="bi bi-book" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>`;
+                wordIcon.innerHTML = `<i data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <img src='../static/assets/search-of-knowledge.png' />
+                </i>`;
                 modalResult.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
@@ -221,6 +225,11 @@ const botPlayer = (data) => {
         switchTurn('player'); // Ensure turn is switched even on error
     });
 };
+
+document.querySelector('.history').addEventListener('mouseenter', function() {
+    var offcanvas = new bootstrap.Offcanvas(document.getElementById('history'));
+    offcanvas.show();
+});
 
 
 document.querySelector("#player-word").addEventListener("input", playerInputHandler);

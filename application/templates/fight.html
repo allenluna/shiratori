@@ -9,7 +9,7 @@
         
         <!-- Quit Form -->
         <form action="{{ url_for('multiplayer.quit_lobby', lobby_id=lobby_id) }}" method="POST" class="quitPlayer">
-            <button type="submit" class="btn btn-danger">QUIT</button>
+            <a type="submit" class="btn btn-danger" href="{{url_for('auth.logout')}}">QUIT</a>
         </form>
 
         <h2 class="text-center py-3">Multiplayer</h2>

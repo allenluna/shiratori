@@ -8,25 +8,27 @@
 
 <section class="manage" style="height: 90vh; overflow-y: auto;">
     <div class="container" style="max-height: 90vh; overflow-y: auto;">
-        <a class="history" type="button" data-bs-toggle="offcanvas" data-bs-target="#history" aria-controls="offcanvasScrolling"><i class="bi bi-book"></i></a>
-        <a class="quit" href="{{ url_for('view.single_player') }}">QUIT</a>
-        <h2 class="text-center py-3">Single Player</h2>
+        <a class="history" type="button" data-bs-toggle="offcanvas" data-bs-target="#history" aria-controls="offcanvasScrolling"> <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="history"></a>
+        <a class="quit" href="{{ url_for('auth.logout') }}"><img src="{{ url_for('static', filename='assets/remove.png') }}" alt="close"></a>
+        <!-- <h2 class="text-center py-3">Single Player</h2> -->
         <div class="row">
             <div class="col-md-12 text-center">
                 <p id="timer">Time left: 30s</p>
                 <p id="score"></p>
             </div>
             <div class="col-md-6 mb-4">
+                <div class="single-player-profile">
+                    <!-- <img src="{{ url_for('static', filename=player) }}" alt="Profile Image"> -->
+                    <h3 class="text-center" id="player_name">{{ player.username }}</h3>
+                </div>
                 <div class="card position-relative">
-                    <div class="single-player-profile">
-                        <img src="{{ url_for('static', filename=player) }}" alt="Profile Image">
-                    </div>
+
                     <div class="card-body">
                         <div class="col-md-12 text-center">
-                            <label for="player-word" class="form-label">Player</label>
+                            <!-- <label for="player-word" class="form-label">Player</label> -->
                             <div class="input-group">
                                 <input type="text" name="player_word" class="form-control" id="player-word" required placeholder="Word" autocomplete="off">
-                                <span class="input-group-text" id="word-icon"></span>
+                                <span class="input-group-text  word-icon" id="word-icon"></span>
                             </div>
                         </div>
                         <div class="py-2" id="player-result"></div>
@@ -34,13 +36,15 @@
                 </div>
             </div>
             <div class="col-md-6 mb-4">
+                <div class="single-player-profile">
+                    <!-- <img src="{{ url_for('static', filename=bot) }}" alt="Profile Image"> -->
+                    <h3 class="text-center">Kompyuter</h3>
+                </div>
                 <div class="card position-relative">
-                    <div class="single-player-profile">
-                        <img src="{{ url_for('static', filename=bot) }}" alt="Profile Image">
-                    </div>
+
                     <div class="card-body">
                         <div class="col-md-12 text-center">
-                            <label for="bot-word" class="form-label">Bot</label>
+                            <!-- <label for="bot-word" class="form-label">Bot</label> -->
                             <input disabled type="text" name="bot_word" class="form-control" id="bot-word" required placeholder="Word" autocomplete="off">
                         </div>
                         <div id="bot-result" class="py-2"></div>

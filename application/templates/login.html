@@ -6,7 +6,40 @@
 {% endblock %}
 
 {% block title %}Login{% endblock %} {% block body %}
+<div class="carousel-data" id="carousel-homepage">
+  <div id="carouselExampleIndicators" class="carousel slide carousel-page">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active home-btn" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class=" home-btn" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class=" home-btn" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <p>Atchu ya ing <span>AGKAS</span> Keni, <br> bantang kanita ituru nakayu <br> nung makananu mag kapampangan</p>
+      </div>
+      <div class="carousel-item">
+        <p>Mabayasa ka at abalu mula <br> buring sabyan dening <br> kapampangan a salita.</p>
+      </div>
+      <div class="carousel-item taluki-p">
+        <p>Tara! Magumpisa tana.</p>
+        <b class="taluki btn" id="taluki">Taluki</b>
+      </div>
+    </div>
+    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button> -->
+  </div>
+</div>
+
 <div class="auth-form">
+  <div class="main-logo">
+    <img src="{{ url_for('static', filename='assets/main-logo.png') }}" alt="">
+  </div>
 <div class="container auth-form-center">
   {% with messages = get_flashed_messages() %} {% if messages %} {% for message
   in messages %}
@@ -20,38 +53,33 @@
     ></button>
   </div>
   {% endfor %} {% endif %} {% endwith %}
-  <form class="container w-50 w-md-50 p-5 position-relative auth-container" method="post">
-    <img src="{{ url_for('static', filename='assets/img1.png') }}" class="login-img" alt="image-1">
-    <h1 class="text-center">AGKAS</h1>
-    <p class="text-center">Kapampangan Words</p>
+  <form class="container w-50 w-md-50 p-5 position-relative auth-container text-center" method="post">
+
+    <h3>Nanu ka lagyu?</h3>
     <div class="mb-3">
-      <label for="email" class="form-label">Username: </label>
       <input
         name="username"
         type="text"
-        class="form-control"
+        class="form-control username"
         id="username"
-        placeholder="Username"
+        placeholder="Pangalan"
         autocomplete="off"
       />
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password: </label>
-      <input
-        name="password"
-        type="password"
-        class="form-control"
-        id="password"
-        placeholder="Password"
-      />
-    </div>
-    <a href="{{ url_for('auth.forgot_password') }}" class="text-end pb-3">Forgot Password?</a>
     <div class="text-center">
-      <button type="submt" class="btn btn-dark w-50 w-md-25 text-center">Login</button>
-      <p><a href="{{ url_for('auth.register') }}">Sign Up</a></p>
+      <button type="submt" class="btn w-50 w-md-25 text-center taluki">Malawus</button>
     </div>
+    <!-- <br>
+    <h5 class="text-center">Malawus at mabyasa <br>ka kening <span>AGKAS</span></h5> -->
+
   </form>
   </div>
 </div>
   
+{% endblock %}
+
+{% block script%}
+
+  <script src="{{ url_for('static', filename='js/taluki.js') }}"></script>
+
 {% endblock %}

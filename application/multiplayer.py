@@ -12,7 +12,6 @@ multiplayer = Blueprint("multiplayer", __name__)
 
 
 @multiplayer.route("/create-lobby", methods=["GET", "POST"])
-@login_required
 def create_lobby():
     data = request.json
     name = data.get('name')
@@ -25,7 +24,6 @@ def create_lobby():
 
 
 @multiplayer.route("/get-lobbies", methods=["GET", "POST"])
-@login_required
 def get_lobbies():
     lobbies = Multiplayer_Lobby.query.all()
     lobbies_info = []
@@ -46,7 +44,6 @@ def get_lobbies():
  
 
 @multiplayer.route("/join-lobby/<int:lobby_id>", methods=["GET", "POST"])
-@login_required
 def join_lobby(lobby_id):
     lobby = Multiplayer_Lobby.query.get_or_404(lobby_id)
     user_in_lobby = Lobby_User.query.filter_by(lobby_id=lobby_id, user_id=current_user.id).first()
@@ -66,7 +63,6 @@ def join_lobby(lobby_id):
     
     
 @multiplayer.route("/quit-lobby/<int:lobby_id>", methods=["POST"])
-@login_required
 def quit_lobby(lobby_id):
     # Find the lobby and the user in the lobby
     lobby = Multiplayer_Lobby.query.get_or_404(lobby_id)
@@ -87,7 +83,6 @@ def quit_lobby(lobby_id):
 
 
 @multiplayer.route("/players-answer", methods=["POST"])
-@login_required
 def player_answer():
     try:
         data = request.json
