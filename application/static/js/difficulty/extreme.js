@@ -134,7 +134,13 @@ const playerInputHandler = (e) => {
             return;
         }
 
+        if(res.data.length === 0 ){
+            updateScore("player", true);
+            switchTurn("bot")
+        }
+
         res.data.forEach(player => {
+            let listPrev = [];
             const cardDiv = document.createElement("div");
             cardDiv.className = "card mb-2";
             cardDiv.innerHTML = `
@@ -149,6 +155,7 @@ const playerInputHandler = (e) => {
                     alert("Word Already Used.");
                     return;
                 }
+
 
                 prevSearch = player.word;
 
@@ -165,18 +172,18 @@ const playerInputHandler = (e) => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h6 class="fs-5">Meaning:</h6>
+                            <h6 class="fs-5">Buri nang sabyan:</h6>
                             <p>${player.meaning}</p>
                             <hr>
-                            <h6 class="fs-5">Example:</h6>
+                            <h6 class="fs-5">Pamag Bigkas:</h6>
                             <p>${player.description}</p>
                         </div>
                     </div>
                 `;
 
-                updateScore('player');
-                switchTurn('bot');
+                
             });
+            switchTurn('bot');
         });
     });
 };
@@ -184,24 +191,31 @@ const playerInputHandler = (e) => {
 
 // Bot player function
 const botPlayer = (data) => {
-    const search = data.slice(-2);
+    const search = data.slice(-3); // Extract the last three characters
 
     fetch("/bot-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "search": search })
-    }).then(res => res.json()).then((res) => {
+        body: JSON.stringify({ "search": data })
+    })
+    .then(res => res.json())
+    .then((res) => {
         const botResult = document.querySelector("#bot-result");
         const botWord = document.querySelector("#bot-word");
         botResult.innerHTML = "";
 
+        // Log the response to debug
+        // console.log("Bot response data:", res.data);
+
+        // Check if the bot found valid words
         if (res.data.length === 0) {
-            // Bot failed to find a word, decrease botScore and switch turn
-              // Decrease bot's score
             switchTurn('player');
+            updateScore("bot", true)
             return;
         }
 
+
+        // Process each valid word from the bot's response
         res.data.forEach(bot => {
             const cardDiv = document.createElement("div");
             cardDiv.className = "card mb-2";
@@ -210,22 +224,24 @@ const botPlayer = (data) => {
             cardDiv.innerHTML = `
                 <div class="text-center card-body border-0 outline-0" data-word="${bot.word}">
                     <h5 class="card-title">${bot.word}</h5>
-                    <h6>Meaning:</h6>
+                    <h6>Buri nang sabyan:</h6>
                     <p class="card-title">${bot.meaning}</p>
-                    <h6>Example:</h6>
-                    <p class="card-title">Ang <span class="fw-bold text-red">${bot.word}</span> ay <span class="fw-bold text-red">${bot.meaning}</span> sa tagalog</p>
+                    <h6>Pamag Bigkas:</h6>
+                    <p class="card-title"><span class="fw-bold text-red">${bot.meaning}</span></p>
                 </div>
             `;
-            botResult.appendChild(cardDiv);    
-            updateScore('bot', true);                              
+            botResult.appendChild(cardDiv);
+            switchTurn('player'); // Switch back to player after bot's turn
         });
 
-        switchTurn('player');
-    }).catch(error => {
+
+    })
+    .catch(error => {
         console.error('Error fetching bot data:', error);
         switchTurn('player'); // Ensure turn is switched even on error
     });
 };
+
 
 document.querySelector('.history').addEventListener('mouseenter', function() {
     var offcanvas = new bootstrap.Offcanvas(document.getElementById('history'));

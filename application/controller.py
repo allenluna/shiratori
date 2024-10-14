@@ -2,6 +2,7 @@ from flask import request, Blueprint, jsonify
 from .models import Player, Bot
 from . import db
 from sqlalchemy.sql.expression import func
+import re
 
 controller = Blueprint("controller", __name__)
 
@@ -88,10 +89,15 @@ def single_search():
 def bot_search():
     
     search = request.json["search"].title()
-    print(search)
-    search_data = Bot.query.filter(Bot.word.like(f'%{search}%')).order_by(func.random()).limit(1).all()
     
-    return {"data": [datas(data) for data in search_data]}
+    syllable_match = re.search(r'([aeiou][^aeiou]*)$', search)
+    
+    if syllable_match:
+        last_syllable = syllable_match.group(0)
+        search_data = Bot.query.filter(Bot.word.like(f'%{last_syllable}%')).order_by(func.random()).limit(1).all()
+    
+        return {"data": [datas(data) for data in search_data]}
+    return {"data": []}
 
 #################################### data tables controller ###########################
 
