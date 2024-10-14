@@ -5,3 +5,11 @@ document.querySelector("#taluki").addEventListener("click", () => {
     authForm.style.display = "block";
 
 })
+
+
+
+document.querySelector("#username").addEventListener("input", (e) => {
+    let nameBtn = document.querySelector("#nameBtn");
+    // Enable or disable the button based on input value
+    nameBtn.disabled = e.target.value.trim() === ""; // Disable if input is empty
+});

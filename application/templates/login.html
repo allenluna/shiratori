@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 {% endblock %}
 
-{% block title %}Login{% endblock %} {% block body %}
+{% block body %}
 <div class="carousel-data" id="carousel-homepage">
   <div id="carouselExampleIndicators" class="carousel slide carousel-page">
     <div class="carousel-indicators">
@@ -16,6 +16,9 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <p>Atchu ya ing <span>AGKAS</span> Keni, <br> bantang kanita ituru nakayu <br> nung makananu mag kapampangan</p>
+        <!-- <div class=" auth-logo">
+          <img src="{{ url_for('static', filename='assets/main-logo.png') }}" alt="">
+        </div> -->
       </div>
       <div class="carousel-item">
         <p>Mabayasa ka at abalu mula <br> buring sabyan dening <br> kapampangan a salita.</p>
@@ -37,9 +40,9 @@
 </div>
 
 <div class="auth-form">
-  <div class="main-logo">
+  <!-- <div class="main-logo">
     <img src="{{ url_for('static', filename='assets/main-logo.png') }}" alt="">
-  </div>
+  </div> -->
 <div class="container auth-form-center">
   {% with messages = get_flashed_messages() %} {% if messages %} {% for message
   in messages %}
@@ -60,14 +63,14 @@
       <input
         name="username"
         type="text"
-        class="form-control username"
+        class="form-control username text-center"
         id="username"
         placeholder="Pangalan"
         autocomplete="off"
       />
     </div>
     <div class="text-center">
-      <button type="submt" class="btn w-50 w-md-25 text-center taluki">Malawus</button>
+      <button type="submt" id="nameBtn" class="btn w-50 w-md-25 text-center taluki" disabled>Malawus</button>
     </div>
     <!-- <br>
     <h5 class="text-center">Malawus at mabyasa <br>ka kening <span>AGKAS</span></h5> -->

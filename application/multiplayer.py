@@ -19,8 +19,22 @@ def create_lobby():
         lobby = Multiplayer_Lobby(name=name, users=0, max_users=2)  # Set max_users as needed
         db.session.add(lobby)
         db.session.commit()
-        return jsonify({"data": "works", "name": name, "id": lobby.id})
+        return jsonify({"data": "works", "name": name, "id": lobby.id, "admin": current_user.username})
     return jsonify({"data": "error", "message": "Invalid lobby name"}), 400
+
+
+@multiplayer.route("/delete-lobby", methods=["GET", "POST", "DELETE"])
+def delete_lobby():
+    
+    if request.method == "DELETE":
+        data = request.json
+        id = int(data.get("id"))
+        lobby = Multiplayer_Lobby.query.get(id)
+        
+        db.session.delete(lobby)
+        db.session.commit()
+        return {"data": "works"}
+    return "Works"
 
 
 @multiplayer.route("/get-lobbies", methods=["GET", "POST"])
@@ -36,7 +50,8 @@ def get_lobbies():
             "id": lobby.id,
             "name": lobby.name,
             "has_users": user_count > 0,
-            "user_count": lobby.users
+            "user_count": lobby.users,
+            "admin": current_user.username
         })
 
     return jsonify(lobbies_info)

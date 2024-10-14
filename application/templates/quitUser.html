@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %} Home {% endblock %}
+{% extends "base.html" %}
 
 {% block body%}
 
@@ -7,7 +7,7 @@
     <p class="text-center">Reload if the other player joins.</p>
     
     <form action="{{ url_for('multiplayer.quit_lobby', lobby_id=lobby_id) }}" method="POST" class="text-center">
-        <a type="submit" class="btn btn-danger" href="{{ url_for('auth.logout') }}">QUIT</a>
+        <a type="submit" class="btn btn-danger" href="{{ url_for('view.multi_player') }}">QUIT</a>
     </form>
 </div>
 

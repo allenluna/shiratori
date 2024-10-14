@@ -1,19 +1,37 @@
-{% extends "base.html" %} {% block title %} Manage {% endblock %}
+{% extends "base.html" %}
 
 {% block body %}
 <section class="manage d-flex justify-content-center align-items-center" style="height: 90vh;">
 
+    <nav>
+        <div id="wrapper">
+          <ul>
+            <li class="different">
+              <a href="{{ url_for('view.home') }}">
+                <img src="{{ url_for('static', filename='assets/home.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('view.single_player') }}">
+                <img src="{{ url_for('static', filename='assets/artificial-intelligence.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('view.multi_player') }}">
+                <img src="{{ url_for('static', filename='assets/vs.png') }}" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <img src="{{ url_for('static', filename='assets/brain.png') }}" alt="">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     <main class="card-manage">
-        <div class="back" id="back-to">
-            <i class="bi bi-chevron-left"></i>Back
-        </div>
-        <div class="manage-logo">
-            <img src="{{ url_for('static', filename='assets/img1.png') }}" alt="">
-            <img src="{{ url_for('static', filename='assets/img3.png') }}" alt="">
-            <img src="{{ url_for('static', filename='assets/img2.png') }}" alt="">
-        </div>
-        <h1>AGKAS</h1>
-        <p>Kapampangan Words</p>
+        <!-- <h1>Kapampangan Words</h1> -->
+        <!-- <p>Kapampangan Words</p> -->
         <div class="add-words">
             <a href="{{ url_for('view.player_dictionary') }}" class="btn btn-dark mb-2 w-75">Player Dictionary</a>
             <a href="{{ url_for('view.bot_dictionary') }}" class="btn btn-dark mb-2 w-75">Bot Dictionary</a>

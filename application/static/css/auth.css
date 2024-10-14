@@ -63,6 +63,8 @@ form{
     border-bottom: 1px solid black !important;
     border-radius: 0 !important;
     margin: 50px 0;
+    width: 300px;
+    margin: 30px auto;
 }
 
 .auth-container div input:focus{
@@ -86,24 +88,66 @@ form{
 text-align: center;
 background-color: red;
 } */
-.main-logo img{
+.auth-logo img{
+    /* position: absolute;
+    top: 70%;
+    left:  60%;
+    scale: 2;
+    transform: translate(-58%, -50%);
+    opacity: 0;
+    animation: logo-anim 1s ease-in; */
     position: absolute;
     top: 60%;
+    left:  63%;
+    scale: 2;
+    transform: translate(-58%, -50%);
+    opacity: 0;
+    animation: auth-anim 1s ease-in;
+}
+
+.main-logo img{
+    /* position: absolute;
+    top: 30%;
     left:  58%;
     scale: 2;
     transform: translate(-58%, -50%);
     opacity: 0;
-    animation: logo-anim 1s ease-in;
+    animation: auth-anim 1s ease-in; */
     /* z-index: 1; */
+    position: absolute;
+    top: 60%;
+    left:  58%;
+    transform: translate(-58%, -50%);
+    scale: 2;
+    opacity: 0;
+    animation: logo-anim 1s ease-in;
+
+}
+
+
+@keyframes auth-anim {
+
+    0%{
+        
+        position: absolute;
+        top: 150%;
+        left:  91%;
+        scale: 5;
+        transform: translate(-58%, -50%);
+        scale: 5;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 
 @keyframes logo-anim {
 
     0%{
-        
         position: absolute;
-        top: 105%;
+        top: 110%;
         left:  80%;
         transform: translate(-58%, -50%);
         scale: 5;

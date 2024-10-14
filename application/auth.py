@@ -23,7 +23,8 @@ def register():
         password = generate_password_hash(request.form.get("password"), method="pbkdf2:sha256", salt_length=8)
         # status = request.form.get("status")
         # user = User.query.filter(or_(User.email == email, User.username == username)).first()
-        
+        if username == "":
+            return flash("Mangabit kang lagyu")
         # if user:
         #     flash("Already registered.")
         # elif name == "":

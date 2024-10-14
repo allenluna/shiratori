@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Easy
-{% endblock %}
-
 {% block body %}
 
 <section class="manage">
     <div class="container" >
         <a class="history" type="button" data-bs-target="#history" aria-controls="offcanvasScrolling"> <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="history"></a>
-        <a class="quit" href="{{ url_for('auth.logout') }}"><img src="{{ url_for('static', filename='assets/remove.png') }}" alt="close"></a>
+        <a class="quit" href="{{ url_for('view.single_player') }}"><img src="{{ url_for('static', filename='assets/remove.png') }}" alt="close"></a>
         <!-- <h2 class="text-center py-3">Single Player</h2> -->
         <div class="row">
             <div class="col-md-12 text-center">

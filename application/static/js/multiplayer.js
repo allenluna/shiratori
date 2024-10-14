@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({"name": name})
         }).then(res => res.json()).then(res => {
             if(res.data === "works"){
-                lobby_items(res.name, res.id);
+                lobby_items(res.name, res.id, res.admin);
                 document.querySelector("#name").value = ""; // Clear the input field
                 // Close the modal
                 let createLobbyModal = document.querySelector('#createLobbyModal');
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const lobby_items = (name, id, userData ,userCount = 0) => {
+const lobby_items = (name, id, userData ,userCount = 0, admin) => {
     let lobby = document.querySelector("#lobby");
     let lobbyItems = document.createElement("div");
     lobbyItems.className = "lobby-items mb-3";
@@ -51,19 +51,26 @@ const lobby_items = (name, id, userData ,userCount = 0) => {
                 <i class="dot-empty"></i>
             `;
     }
-
+ 
     let hasUsers = userCount > 0;
     lobbyItems.innerHTML = `
         <div class="lobby-name">${name}</div>
         <div class="user-join">
             ${userIndicators}
             <div class="btn ${hasUsers ? 'btn-success' : 'btn-secondary'} join-btn" data-lobby-id="${id}" ${hasUsers ? '' : 'disabled'}>${hasUsers ? 'Makyabe' : 'Alang Tau'}</div>
+            ${admin == "admin" ? (
+                `<a class="pl-2 multi-close" data-close=${id}><img src="../static/assets/remove.png" alt="close"></a>`
+            ):
+        (
+            ""
+        )}
         </div>
     `;
 
     lobby.appendChild(lobbyItems);
 
     let joinButton = lobbyItems.querySelector(".join-btn");
+    let deleteMulti = lobbyItems.querySelector(".multi-close")
     if (joinButton && !joinButton.classList.contains("disabled")) {
         joinButton.addEventListener("click", (event) => {
             let lobbyId = event.target.getAttribute("data-lobby-id");
@@ -83,6 +90,20 @@ const lobby_items = (name, id, userData ,userCount = 0) => {
             });
         });
     }
+
+    if(deleteMulti){
+        deleteMulti.addEventListener("click", () => {
+            let newIdDelete = deleteMulti.dataset.close;
+            fetch("/delete-lobby", {
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({id: newIdDelete})
+            }).then(res => res.json()).then((res) => {
+                let parentEl = deleteMulti.parentElement.parentElement;
+                lobby.removeChild(parentEl)
+            })
+        })
+    }
 }
 
 
@@ -94,7 +115,7 @@ const loadLobbies = () => {
     .then(res => res.json())
     .then(lobbies => {
         lobbies.forEach(lobby => {
-            lobby_items(lobby.name, lobby.id, lobby.has_users, lobby.user_count);
+            lobby_items(lobby.name, lobby.id, lobby.has_users, lobby.user_count, lobby.admin);
         });
     })
     .catch(err => {

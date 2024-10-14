@@ -29,11 +29,64 @@ body{
     font-style: normal;
 }
 
+
+
+/* HEART */
+
+#heart {
+    position: relative;
+    width: 300px; /* Set width to 300px */
+    height: 270px; /* Set height to 270px */
+    animation: heartbeat 1s infinite;
+    margin: 0 auto;
+}
+
+#heart:before,
+#heart:after {
+    position: absolute;
+    content: "";
+    left: 150px; /* Adjusted for larger size */
+    top: 90px; /* Adjusted for larger size */
+    width: 150px; /* Set width to 150px */
+    height: 240px; /* Set height to 240px */
+    background: #ff0000;
+    border-radius: 75px 75px 0 0; /* Adjusted for larger size */
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+#heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(0.75);
+    }
+    20% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(0.75);
+    }
+    60% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(0.75);
+    }
+    100% {
+        transform: scale(0.75);
+    }
+}
+
 .hero-name{
     font-family: "Kavoon", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 40px;
+    font-size: 30px;
     color: #de9878;
 }
 
@@ -108,11 +161,17 @@ nav ul li img{
     margin: 50px 0 30px 0;
 }
 
+
 .options h5 span{
     font-family: "Kavoon", serif;
     font-weight: 600;
     font-style: normal;
+    font-size: 35px;
     color:#de9878;
+}
+
+#nameBtn{
+    cursor: pointer;
 }
 
 
@@ -216,11 +275,11 @@ nav ul li img{
 }
 
 .card-manage{
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; */
     width: 300px;
     text-align: center;
     width: 40%;
-    padding: 2% 1.5% 5% 1.5%;
+    padding: 0.2% 1.5% 5% 1.5%;
     border-radius: 30px;
     line-height: 1px;
 }
@@ -240,7 +299,7 @@ nav ul li img{
     align-items: center;
     justify-content: center;
     position: relative;
-    top: 40px;
+    top: -30px;
 }
 
 .back{
@@ -357,6 +416,11 @@ nav ul li img{
 
 .quit-mul img{
     width: 32px;
+}
+
+.multi-close img{
+    width: 32px;
+    margin-left: 10px;
 }
 
 .quit img{
@@ -478,13 +542,83 @@ nav ul li img{
         width: 400px;
     } 
 }
+
+
+
+
 @media screen and (max-width: 500px){
+    nav ul{
+        width: 90%;
+    }
     .profile div{
         border-radius: 10px;
     } 
     .profile img{
         width: 130px;
-    }  
+    }
+
+    .difficulty-loc:nth-child(1) {
+        width: 100%;
+        padding: 7% 0;
+    }
+    .difficulty-loc:nth-child(2) {
+        width: 100%;
+        padding: 7% 0;
+    }
+    .difficulty-loc:nth-child(3) {
+        width: 100%;
+        padding: 7% 0;
+    }
+    .difficulty-loc:nth-child(4) {
+        width: 100%;
+        padding: 7% 0;
+    }
+
+    #heart {
+        position: relative;
+        width: 100px;
+        height: 90px;
+        animation: heartbeat 1s infinite;
+        margin:0 auto
+    }
+    #heart:before,
+    #heart:after {
+        position: absolute;
+        content: "";
+        left: 50px;
+        top: 0;
+        width: 50px;
+        height: 80px;
+        background: #ff0000;
+        -moz-border-radius: 50px 50px 0 0;
+        border-radius: 50px 50px 0 0;
+        -webkit-transform: rotate(-45deg);
+           -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+             -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 0 100%;
+           -moz-transform-origin: 0 100%;
+            -ms-transform-origin: 0 100%;
+             -o-transform-origin: 0 100%;
+                transform-origin: 0 100%;
+    }
+    #heart:after {
+        left: 0;
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+             -o-transform: rotate(45deg);
+                transform: rotate(45deg);
+        -webkit-transform-origin: 100% 100%;
+           -moz-transform-origin: 100% 100%;
+            -ms-transform-origin: 100% 100%;
+             -o-transform-origin: 100% 100%;
+                transform-origin :100% 100%;
+    }
+    
+    
+
 }
 @media screen and (max-width: 425px){
     .card-data {
