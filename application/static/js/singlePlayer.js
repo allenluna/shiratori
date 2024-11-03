@@ -2,15 +2,16 @@ let playerScore = 7;
 let botScore = 7;
 let timer;
 let turn = 'player'; // 'player' or 'bot'
+var botInput = ""
 
 // Start timer function
 const startTimer = () => {
     let timeLeft = 30;
-    document.querySelector("#timer").textContent = `Time left: ${timeLeft}s`;
+    document.querySelector("#timer").textContent = `Oras: ${timeLeft}s`;
 
     timer = setInterval(() => {
         timeLeft -= 1;
-        document.querySelector("#timer").textContent = `Time left: ${timeLeft}s`;
+        document.querySelector("#timer").textContent = `Oras: ${timeLeft}s`;
 
         if (timeLeft <= 0) {
             clearInterval(timer);
@@ -31,7 +32,7 @@ const startTimer = () => {
 const switchTurn = (nextTurn) => {
     clearInterval(timer);
     turn = nextTurn;
-    document.querySelector("#timer").textContent = `Time left: 30s`;
+    document.querySelector("#timer").textContent = `Oras: 30s`;
 
     if (turn === 'player') {
         document.querySelector("#player-word").disabled = false;
@@ -116,26 +117,35 @@ const resetInputForms = () => {
     document.querySelector("#bot-result").innerHTML = "";
 };
 
+
 // Player input handler
-let prevSearch = "";
+let prevSearch = [];
+
+let turnCount = 0;
+let checkInputFromBot = '';
+let botLen = 0
 const playerInputHandler = (e) => {
-    const search = e.target.value;
+    e.preventDefault()
+    const search = document.querySelector("#player-word").value;
+    
     fetch("/single-player-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "search": search })
+        body: JSON.stringify({ "search": search, "twoLet": turnCount, "botInput": botInput })
     }).then(res => res.json()).then((res) => {
         const playerResultDiv = document.querySelector("#player-result");
         const wordIcon = document.querySelector("#word-icon");
         const modalResult = document.querySelector("#modal-result");
         playerResultDiv.innerHTML = "";
 
-        if(res.data.length === 0){
+        if(res.data === "wrong-answer"){
+            document.querySelector("#bot-word").value = ""
             updateScore("player", true)
+            alert("Mali ang sagot")
             
         }else{
+            turnCount += 1
             
-
             res.data.forEach(player => {
                 const cardDiv = document.createElement("div");
                 cardDiv.className = "card mb-2";
@@ -147,12 +157,13 @@ const playerInputHandler = (e) => {
                 playerResultDiv.appendChild(cardDiv);
 
                 cardDiv.querySelector("button").addEventListener("click", () => {
-                    if (prevSearch === player.word) {
+                    if (prevSearch.includes(player.word)) {
                         alert("Word Already Used.");
+                        updateScore('player', true);
                         return;
                     }
 
-                    prevSearch = player.word;
+                    prevSearch.push(player.word);
 
                     document.querySelector("#player-word").value = player.word;
                     playerResultDiv.innerHTML = "";
@@ -175,10 +186,13 @@ const playerInputHandler = (e) => {
                             </div>
                         </div>
                     `;
-
-                    updateScore('player');
+                    
                     switchTurn('bot');
+                    updateScore('player');
+
                 });
+                
+                
             });
         }
     });
@@ -199,37 +213,49 @@ const botPlayer = (data) => {
         botResult.innerHTML = "";
 
         if (res.data.length === 0) {
-            // Bot failed to find a word, decrease botScore and switch turn
-             // Decrease bot's score
+            botInput = "";
+            turnCount -= 1
             updateScore('bot', true);
             switchTurn('player');
-            return;
+            botInput += "no data"
+            botLen = 0
+            document.querySelector("#bot-word").value = ""
+
+            
+        }else{
+            botInput = "";
+            res.data.forEach(bot => {
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card mb-2";
+                botWord.value = bot.word;
+    
+                cardDiv.innerHTML = `
+                    <div class="text-center card-body border-0 outline-0" data-word="${bot.word}">
+                        <h5 class="card-title">${bot.word}</h5>
+                        <h6>Buri nang sabyan:</h6>
+                        <p class="card-title">${bot.meaning}</p>
+                        <h6>Pamag Bigkas:</h6>
+                        <p class="card-title"<span class="fw-bold text-red">${bot.meaning}</span></p>
+                    </div>
+                `;
+                botInput += bot.word
+                botResult.appendChild(cardDiv);
+                turnCount += 1
+                botLen = 1
+                document.querySelector("#player-word").value = ""
+                // updateScore('bot', false);
+            });
+            switchTurn('player');
+            // console. log(botInput[botInput.length - 1])
         }
 
-        res.data.forEach(bot => {
-            const cardDiv = document.createElement("div");
-            cardDiv.className = "card mb-2";
-            botWord.value = bot.word;
-
-            cardDiv.innerHTML = `
-                <div class="text-center card-body border-0 outline-0" data-word="${bot.word}">
-                    <h5 class="card-title">${bot.word}</h5>
-                    <h6>Buri nang sabyan:</h6>
-                    <p class="card-title">${bot.meaning}</p>
-                    <h6>Pamag Bigkas:</h6>
-                    <p class="card-title"<span class="fw-bold text-red">${bot.meaning}</span></p>
-                </div>
-            `;
-            botResult.appendChild(cardDiv);
-            // updateScore('bot', false);
-        });
-
-        switchTurn('player');
     }).catch(error => {
         console.error('Error fetching bot data:', error);
         switchTurn('player'); // Ensure turn is switched even on error
     });
+    // document.querySelector("#player-word").addEventListener("input", newPlayerInputHandler(botInput[botInput.length - 1]))   
 };
+
 
 document.querySelector('.history').addEventListener('mouseenter', function() {
     var offcanvas = new bootstrap.Offcanvas(document.getElementById('history'));
@@ -237,6 +263,7 @@ document.querySelector('.history').addEventListener('mouseenter', function() {
 });
 
 
-document.querySelector("#player-word").addEventListener("input", playerInputHandler);
+document.querySelector("#player-input").addEventListener("submit", playerInputHandler);
+// playerInputHandler()
 
 resetGame();

@@ -36,6 +36,7 @@ const player_dic_data = (datas) => {
     const row = document.querySelector("#row-data");
 
     datas.forEach(data => {
+        console.log(data.word)
         let new_data = `
             <td>${data.word}</td>
             <td>${data.meaning}</td>

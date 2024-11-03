@@ -3,6 +3,7 @@ from .models import Player, Bot
 from . import db
 from sqlalchemy.sql.expression import func
 import re
+from sqlalchemy import asc
 
 controller = Blueprint("controller", __name__)
 
@@ -83,28 +84,52 @@ def single_search():
     search = request.json["search"].title()
     search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
     
+    twoLet = request.json["twoLet"]
+    if twoLet == 2:
+            botInput = request.json["botInput"]
+            print(botInput)
+            if botInput == "no data":
+                search = request.json["search"].title()
+                search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
+                return {"data": [datas(data) for data in search_data]}
+            else:
+                if search[:2] != botInput[-2:].title():
+                    return {"data": "wrong-answer"}
+                
+            
     return {"data": [datas(data) for data in search_data]}
 
 @controller.route("/bot-search", methods=["GET", "POST"])
 def bot_search():
-    
+    # Ensure JSON request contains "search" key
+    if not request.json or "search" not in request.json:
+        return jsonify({"error": "Missing search parameter"}), 400
+
+    # Get the search term and capitalize it
     search = request.json["search"].title()
-    
-    syllable_match = re.search(r'([aeiou][^aeiou]*)$', search)
-    
+
+    # Find the last syllable using regex
+    syllable_match = re.search(r"[aeiouy]+[^aeiouy]*$", search, re.IGNORECASE)
     if syllable_match:
         last_syllable = syllable_match.group(0)
+
+        # Query to find words containing the last syllable
         search_data = Bot.query.filter(Bot.word.like(f'%{last_syllable}%')).order_by(func.random()).limit(1).all()
-    
-        return {"data": [datas(data) for data in search_data]}
-    return {"data": []}
+
+        # Return data if found
+        return jsonify({"data": [datas(data) for data in search_data]})
+
+    # Return empty data if no syllable match is found
+    return jsonify({"data": []})
 
 #################################### data tables controller ###########################
 
 @controller.route("/player-table", methods=["GET", "POST"])
 def player_table():
     
-    players = Player.query.all()
+    players = Player.query.order_by(asc(Player.word)).all()
+    for player in players:
+        print(player.word)
     
     return {"data": [datas(data) for data in players]}
 
@@ -151,7 +176,7 @@ def delete_player():
     ################################## table data edit ###########################
 @controller.route("/bot-table", methods=["GET"])
 def bot_table():
-    bots = Bot.query.all()
+    bots = Bot.query.order_by(asc(Bot.word)).all()
     return jsonify({"data": [datas(bot) for bot in bots]})    
 
 @controller.route("/bot-edit", methods=["GET", "POST"])
@@ -197,7 +222,7 @@ def delete_bot():
 ##################################### player dictionary data ###################################
 @controller.route("/player-dic", methods=["GET", "POST"])
 def player_dic():
-    player_dic_data = Player.query.all()
+    player_dic_data = Player.query.order_by(asc(Player.word)).all()
     
     return {"data": [datas(data) for data in player_dic_data]}
 

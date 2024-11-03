@@ -192,6 +192,7 @@ const botDelete = (id) => {
 const tableData = (datas, fun, del, clickEvent, rowData) => {
     let rows = "";
     datas.forEach(data => {
+        console.log(data.word)
         rows += `
             <tr id="row-${data.id}">
                 <td>${data.word}</td>

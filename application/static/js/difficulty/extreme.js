@@ -2,6 +2,7 @@ let playerScore = 1;
 let botScore = 1;
 let timer;
 let turn = 'player'; // 'player' or 'bot'
+let botInput = ""
 
 // Start timer function
 const startTimer = () => {
@@ -117,129 +118,142 @@ const resetInputForms = () => {
 };
 
 // Player input handler
-let prevSearch = "";
+let prevSearch = [];
+
+let turnCount = 0;
+let checkInputFromBot = '';
 const playerInputHandler = (e) => {
-    const search = e.target.value;
+    e.preventDefault()
+    const search = document.querySelector("#player-word").value;
     fetch("/extreme-single-player-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "search": search })
+        body: JSON.stringify({ "search": search, "twoLet": turnCount, "botInput": botInput })
     }).then(res => res.json()).then((res) => {
         const playerResultDiv = document.querySelector("#player-result");
         const wordIcon = document.querySelector("#word-icon");
         const modalResult = document.querySelector("#modal-result");
         playerResultDiv.innerHTML = "";
 
-        if (search.trim() === "") {
-            return;
-        }
+        if(res.data === "wrong-answer"){
+            document.querySelector("#bot-word").value = ""
+            updateScore("player", true)
+            alert("Mali ang sagot")
+            console.log(botInput)
 
-        if(res.data.length === 0 ){
-            updateScore("player", true);
-            switchTurn("bot")
-        }
-
-        res.data.forEach(player => {
-            let listPrev = [];
-            const cardDiv = document.createElement("div");
-            cardDiv.className = "card mb-2";
-            cardDiv.innerHTML = `
-                <button class="card-body border-0 outline-0 p-2" data-word="${player.word}">
-                    <h5 class="card-title">${player.word}</h5>
-                </button>
-            `;
-            playerResultDiv.appendChild(cardDiv);
-
-            cardDiv.querySelector("button").addEventListener("click", () => {
-                if (prevSearch === player.word) {
-                    alert("Word Already Used.");
-                    return;
-                }
-
-
-                prevSearch = player.word;
-
-                document.querySelector("#player-word").value = player.word;
-                playerResultDiv.innerHTML = "";
-
-                wordIcon.innerHTML = `<i data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <img src='../static/assets/search-of-knowledge.png' />
-                </i>`;
-                modalResult.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">${player.word}</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h6 class="fs-5">Buri nang sabyan:</h6>
-                            <p>${player.meaning}</p>
-                            <hr>
-                            <h6 class="fs-5">Pamag Bigkas:</h6>
-                            <p>${player.description}</p>
-                        </div>
-                    </div>
+            
+        }else{
+            turnCount += 1
+            
+            res.data.forEach(player => {
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card mb-2";
+                cardDiv.innerHTML = `
+                    <button class="card-body border-0 outline-0 p-2" data-word="${player.word}">
+                        <h5 class="card-title">${player.word}</h5>
+                    </button>
                 `;
+                playerResultDiv.appendChild(cardDiv);
 
+                cardDiv.querySelector("button").addEventListener("click", () => {
+                    if (prevSearch.includes(player.word)) {
+                        alert("Word Already Used.");
+                        updateScore('player', true);
+                        return;
+                    }
+
+                    prevSearch.push(player.word);
+
+                    document.querySelector("#player-word").value = player.word;
+                    playerResultDiv.innerHTML = "";
+
+                    wordIcon.innerHTML = `<i data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src='../static/assets/search-of-knowledge.png' />
+                    </i>`;
+                    modalResult.innerHTML = `
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">${player.word}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h6 class="fs-5">Buri nang sabyan:</h6>
+                                <p>${player.meaning}</p>
+                                <hr>
+                                <h6 class="fs-5">Pamag Bigkas:</h6>
+                                <p>${player.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    switchTurn('bot');
+                    updateScore('player');
+
+                });
+                
                 
             });
-            switchTurn('bot');
-        });
+        }
     });
 };
 
 
-// Bot player function
 const botPlayer = (data) => {
-    const search = data.slice(-3); // Extract the last three characters
+    const search = data.slice(-2);
 
     fetch("/bot-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ "search": data })
-    })
-    .then(res => res.json())
-    .then((res) => {
+    }).then(res => res.json()).then((res) => {
         const botResult = document.querySelector("#bot-result");
         const botWord = document.querySelector("#bot-word");
         botResult.innerHTML = "";
 
-        // Log the response to debug
-        // console.log("Bot response data:", res.data);
-
-        // Check if the bot found valid words
         if (res.data.length === 0) {
+            botInput = "";
+            turnCount -= 1
+            updateScore('bot', true);
             switchTurn('player');
-            updateScore("bot", true)
-            return;
+            botInput += "no data"
+            botLen = 0
+            document.querySelector("#bot-word").value = ""
+
+            
+        }else{
+            botInput = "";
+            res.data.forEach(bot => {
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card mb-2";
+                botWord.value = bot.word;
+    
+                cardDiv.innerHTML = `
+                    <div class="text-center card-body border-0 outline-0" data-word="${bot.word}">
+                        <h5 class="card-title">${bot.word}</h5>
+                        <h6>Buri nang sabyan:</h6>
+                        <p class="card-title">${bot.meaning}</p>
+                        <h6>Pamag Bigkas:</h6>
+                        <p class="card-title"<span class="fw-bold text-red">${bot.meaning}</span></p>
+                    </div>
+                `;
+                botInput += bot.word
+                botResult.appendChild(cardDiv);
+                turnCount += 1
+                botLen = 1
+                document.querySelector("#player-word").value = ""
+                // updateScore('bot', false);
+            });
+            switchTurn('player');
+            // console. log(botInput[botInput.length - 1])
         }
+        switchTurn('player');
+        // console. log(botInput[botInput.length - 1])
 
-
-        // Process each valid word from the bot's response
-        res.data.forEach(bot => {
-            const cardDiv = document.createElement("div");
-            cardDiv.className = "card mb-2";
-            botWord.value = bot.word;
-
-            cardDiv.innerHTML = `
-                <div class="text-center card-body border-0 outline-0" data-word="${bot.word}">
-                    <h5 class="card-title">${bot.word}</h5>
-                    <h6>Buri nang sabyan:</h6>
-                    <p class="card-title">${bot.meaning}</p>
-                    <h6>Pamag Bigkas:</h6>
-                    <p class="card-title"><span class="fw-bold text-red">${bot.meaning}</span></p>
-                </div>
-            `;
-            botResult.appendChild(cardDiv);
-            switchTurn('player'); // Switch back to player after bot's turn
-        });
-
-
-    })
-    .catch(error => {
+    }).catch(error => {
         console.error('Error fetching bot data:', error);
         switchTurn('player'); // Ensure turn is switched even on error
     });
+    // document.querySelector("#player-word").addEventListener("input", newPlayerInputHandler(botInput[botInput.length - 1]))   
 };
 
 
@@ -250,6 +264,6 @@ document.querySelector('.history').addEventListener('mouseenter', function() {
 
 
 
-document.querySelector("#player-word").addEventListener("input", playerInputHandler);
+document.querySelector("#player-input").addEventListener("submit", playerInputHandler);
 
 resetGame();

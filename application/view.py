@@ -6,6 +6,7 @@ from .models import Player, Bot, Multiplayer_Lobby, Lobby_User, User
 import random
 from flask_socketio import emit
 from . import socketio  # Import socketio from __init__.py
+from sqlalchemy import asc
 
 view = Blueprint("view", __name__)
 
@@ -176,7 +177,7 @@ def add_words():
 @view.route("/data-tables", methods=["GET", "POST"])
 def data_tables():
     
-    players = Player.query.all()
+    players = Player.query.order_by(asc(Player.word)).all()
     bots = Bot.query.all()
 
     

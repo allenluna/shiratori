@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 h1, h2, h3, h4, h5, h6, p, span, a{
-    font-family: "Klee One", cursive;
-    font-weight: 600;
+    font-family: "Luckiest Guy", cursive;
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -83,7 +84,7 @@ body{
 }
 
 .hero-name{
-    font-family: "Kavoon", serif;
+    font-family: "Luckiest Guy", cursive;
     font-weight: 400;
     font-style: normal;
     font-size: 30px;
@@ -163,8 +164,8 @@ nav ul li img{
 
 
 .options h5 span{
-    font-family: "Kavoon", serif;
-    font-weight: 600;
+    font-family: "Luckiest Guy", cursive;
+    font-weight: 400;
     font-style: normal;
     font-size: 35px;
     color:#de9878;
@@ -184,8 +185,16 @@ nav ul li img{
 }
 
 .card-body{
-    width: 100%;
-    padding-top: 60px;
+    padding:60px 40px;
+}
+
+.card-body-day{
+    padding:60px 40px;
+    margin: 100px auto;
+    background-color: #fff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    width: 80%;
+    border-radius: 20px;
 }
 
 .card-header{

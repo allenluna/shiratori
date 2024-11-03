@@ -44,6 +44,19 @@ def medium_single_search():
     search = request.json["search"].title()
     search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
     
+    twoLet = request.json["twoLet"]
+    if twoLet == 2:
+            botInput = request.json["botInput"]
+            print(botInput)
+            if botInput == "no data":
+                search = request.json["search"].title()
+                search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
+                return {"data": [datas(data) for data in search_data]}
+            else:
+                if search[:2] != botInput[-2:].title():
+                    return {"data": "wrong-answer"}
+                
+            
     return {"data": [datas(data) for data in search_data]}
 
 
@@ -62,6 +75,19 @@ def hard_single_search():
     search = request.json["search"].title()
     search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
     
+    twoLet = request.json["twoLet"]
+    if twoLet == 2:
+            botInput = request.json["botInput"]
+            print(botInput)
+            if botInput == "no data":
+                search = request.json["search"].title()
+                search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
+                return {"data": [datas(data) for data in search_data]}
+            else:
+                if search[:2] != botInput[-2:].title():
+                    return {"data": "wrong-answer"}
+                
+            
     return {"data": [datas(data) for data in search_data]}
 
 
@@ -79,4 +105,17 @@ def extreme_single_search():
     search = request.json["search"].title()
     search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
     
+    twoLet = request.json["twoLet"]
+    if twoLet == 2:
+            botInput = request.json["botInput"]
+            print(botInput)
+            if botInput == "no data":
+                search = request.json["search"].title()
+                search_data = Player.query.filter(Player.word.like(f'%{search}%')).order_by(func.random()).limit(3).all()
+                return {"data": [datas(data) for data in search_data]}
+            else:
+                if search[:2] != botInput[-2:].title():
+                    return {"data": "wrong-answer"}
+                
+            
     return {"data": [datas(data) for data in search_data]}
