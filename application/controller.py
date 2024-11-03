@@ -1,7 +1,7 @@
 from flask import request, Blueprint, jsonify
 from .models import Player, Bot
 from . import db
-from sqlalchemy.sql.expression import func
+from sqlalchemy import func
 import re
 from sqlalchemy import asc
 
@@ -106,15 +106,20 @@ def bot_search():
         return jsonify({"error": "Missing search parameter"}), 400
 
     # Get the search term and capitalize it
-    search = request.json["search"].title()
+    search = request.json["search"]
 
     # Find the last syllable using regex
-    syllable_match = re.search(r"[aeiouy]+[^aeiouy]*$", search, re.IGNORECASE)
+    # syllable_match = re.search(r"([aeiouy][^aeiouy]*)([^aeiouy]*$)", search, re.IGNORECASE)
+    syllable_match = re.search(r"([^aeiouy]*[aeiouy][^aeiouy]*)$", search, re.IGNORECASE)
+
+
     if syllable_match:
         last_syllable = syllable_match.group(0)
-
+        print(last_syllable)
         # Query to find words containing the last syllable
-        search_data = Bot.query.filter(Bot.word.like(f'%{last_syllable}%')).order_by(func.random()).limit(1).all()
+        # search_data = Bot.query.filter(Bot.word.like(f'%{last_syllable}%')).order_by(func.random()).limit(1).all()
+        search_data = Bot.query.filter(Bot.word.ilike(f'{last_syllable}%')).order_by(func.random()).limit(1).all()
+
 
         # Return data if found
         return jsonify({"data": [datas(data) for data in search_data]})
