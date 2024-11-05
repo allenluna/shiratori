@@ -16,9 +16,9 @@ def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "asdasdsa sadsadsadas"
     load_dotenv()
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://postgres:qwerty@localhost:5432/agkas"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://postgres:qwerty@localhost:5432/agkas"
     # postgresql://agkas_cq36_user:StRxiMnN8jw1r5VFQDzqam4TAuwNA8xg@dpg-cran70dds78s73d6vi0g-a.oregon-postgres.render.com/agkas_cq36
-    # app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.config['SESSION_TYPE'] = 'filesystem'
