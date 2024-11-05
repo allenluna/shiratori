@@ -110,7 +110,8 @@ def bot_search():
 
     # Find the last syllable using regex
     # syllable_match = re.search(r"([aeiouy][^aeiouy]*)([^aeiouy]*$)", search, re.IGNORECASE)
-    syllable_match = re.search(r"([^aeiouy]*[aeiouy][^aeiouy]*)$", search, re.IGNORECASE)
+    # syllable_match = re.search(r"([^aeiouy]*[aeiouy][^aeiouy]*)$", search, re.IGNORECASE)
+    syllable_match = re.search(r"([aeiouy]+[^aeiouy]*)$", search, re.IGNORECASE)
 
 
     if syllable_match:

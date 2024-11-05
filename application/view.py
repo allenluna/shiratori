@@ -22,8 +22,9 @@ def home():
 
 @view.route("/single-player")
 def single_player():
-    
-    return render_template("singlePlayer.html")
+    dif = request.args.get("dif")
+    print(dif)
+    return render_template("singlePlayer.html", dif=dif)
 
 
 ############### multi player ##############
