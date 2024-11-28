@@ -19,6 +19,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .header h1{
@@ -30,6 +31,16 @@ body{
     font-style: normal;
 }
 
+.agkas-space{
+    padding-left: 5px;
+}
+
+.header .manage {
+    position: absolute; /* Allows free positioning within the header */
+    right: 10px; /* Positions the link 10px from the right edge */
+    color: #fff; /* Link color */
+    font-weight: 400;
+  }
 
 
 /* HEART */

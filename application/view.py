@@ -132,7 +132,7 @@ def handle_get_turn():
     current_turn_player = User.query.filter_by(turn=True).first()
     current_turn = current_turn_player.username if current_turn_player else None
     is_user_turn = (current_user.username == current_turn)
-
+    print(current_turn_player.username)
     emit('turn_status', {
         'is_user_turn': is_user_turn,
         'current_turn': current_turn

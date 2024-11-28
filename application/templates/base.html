@@ -20,6 +20,10 @@
 <body id="container" class="body-container">
   <header class="header">
     <h1>AGKAS</h1>
+    {% if current_user.username == "admin" %}
+    <a class="manage" href="{{ url_for('view.add_words') }}">Manage</a>
+    {% endif %}
+
   </header>
 
 {% if current_user.is_authenticated %}
