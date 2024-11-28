@@ -90,7 +90,7 @@ const fetchLobbyId = () => {
 };
 
 const startTimer = () => {
-    let timeLeft = 5; // Set initial timer value
+    let timeLeft = 15; // Set initial timer value
     document.querySelector("#timer").textContent = `Time left: ${timeLeft}s`;
 
     clearInterval(timer); // Clear any existing timer
